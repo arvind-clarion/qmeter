@@ -1,0 +1,204 @@
+<!DOCTYPE HTML SYSTEM>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Application Report</title>
+    <style>
+      /* CSS style used for HTML reports */
+      body {
+        font-family: sans-serif;
+        color: #161616;
+        width: 70%;
+        margin: auto;
+      }
+      th {
+         /*background-color: #980905;*/
+         /*border-bottom: 5px solid #530200;*/
+         /*color: white;*/
+         font-size: 11pt;
+         padding: 1px 8px 1px 8px;
+       }
+
+       td {
+         border-bottom: 2px solid white;
+         font-family: monospace;
+         padding: 5px 8px 1px 8px;
+       }
+
+       table {
+         /*background-color: #FCF4D4;*/
+         border-collapse: collapse;
+         /*color: black;*/
+       }
+
+       tr.first {
+         border-top: 1px solid #7ecc54;
+         padding-top: 2px;
+       }
+
+       table{
+        width: 100%;
+        border: 1px;
+        border-color: black;
+       }
+       th, td{
+        width: 33.33%;
+       }
+
+      .pie1 .title {
+        position: relative;
+        bottom: -40px;
+        text-align: top;
+        width: 50%;
+      }
+
+      .content {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background-color: #fff;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        line-height: 100px;
+        font-family: arial, sans-serif;
+        font-size: 35px;
+        text-align: center;
+        z-index: 2;
+      }
+      .content span {
+        opacity: 0;
+        animation: load-content 1s;
+        animation-fill-mode: forwards;
+        animation-delay: 0.6s;
+        -webkit-animation: load-content 3s;
+        -webkit-animation-fill-mode: forwards;
+        -webkit-animation-delay: 0.6s;
+      }
+      @keyframes load-content {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 5;
+        }
+      }
+      @-webkit-keyframes load-content {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .pie {
+          width:200px;
+          height:200px;
+          -moz-border-radius:100px;
+          -webkit-border-radius:100px;
+          border-radius:100px;
+          position:relative;
+      }
+    </style>
+  </head>
+  <body>
+    <table width="70%" margin="auto" border="1%">
+      <tr>
+        <th>
+          <h3>Security Warnings</h3>
+          <div class="pie" style="<%= if @brakeman_warnings.count > @security_warnings then "background-color:red;" else "background-color:green;" end  %>">
+            <div class="title"></div>
+            <div class="outer-right mask" id= "10deg"></div>
+            <div class="inner-right"></div>
+
+            <div class="outer-left mask">
+              <div class="inner-left"></div>
+            </div>
+            <div class="content">
+              <span><%= @brakeman_warnings.count %></span>
+            </div>
+          </div><p></p>
+          <a href="<%= @app_root %>/report.html" target="_blank">Report</a>
+        </th>
+
+        <th>
+          <h3>Rails Best Practise</h3>
+          <div class="pie" style="<%= if @rails_best_practices_info.first['rails_best_practices'] > @rails_best_practices then "background-color:red;" else "background-color:green;" end  %>">
+            <div class="title"></div>
+            <div class="outer-right mask" id= "10deg">
+              <!-- <div class="inner-right"></div> -->
+            </div>
+
+            <div class="outer-left mask">
+              <div class="inner-left"></div>
+            </div>
+            <div class="content">
+              <span><%= @rails_best_practices_info.first['rails_best_practices'] %></span>
+            </div>
+          </div>
+          <p></p>
+          <a href="<%= @app_root %>/tmp/metric_fu/output/rails_best_practices.html" target="_blank">Report</a>
+        </th>
+
+        <th>
+          <h3>Flog</h3>
+          <div class="pie" style="<%= if @flog_info.first['flog'] > @flog_complexity then "background-color:red;" else "background-color:green;" end  %>">
+            <div class="title"></div>
+            <div class="outer-right mask" id= "10deg">
+              <div class="inner-right"></div>
+            </div>
+
+            <div class="outer-left mask">
+              <div class="inner-left"></div>
+            </div>
+            <div class="content">
+              <span><%= @flog_info.first['flog'] %></span>
+            </div>
+          </div><p></p>
+          <a href="<%= @app_root %>/tmp/metric_fu/output/flog.html" target="_blank">Report</a>
+        </th>
+
+        <th>
+          <h3>Stat</h3>
+          <div class="pie" style="<%= if @stats_info.first['stats'] > @stats_ratio then "background-color:red;" else "background-color:green;" end  %>">
+            <div class="title"></div>
+            <div class="outer-right mask" id= "10deg">
+              <div class="inner-right"></div>
+            </div>
+
+            <div class="outer-left mask">
+              <div class="inner-left"></div>
+            </div>
+            <div class="content">
+              <span><%= @stats_info.first['stats'] %></span>
+            </div>
+          </div><p></p>
+          <a href="<%= @app_root %>/tmp/metric_fu/output/stats.html" target="_blank">Report</a>
+        </th>
+      </tr>
+    </table>
+    <p></p>
+    
+    <h2>Security Warnings</h2>
+    <table style="background-color: pink;">
+      <tr>
+        <th>Type</th>
+        <th>File</th>
+        <th>Message</th>
+      </tr>
+
+      <% @brakeman_warnings.each do |warning| %>
+        <tr>
+          <td><h4><%= warning['warning_type'] %></h4></td>
+          <td><%= warning['file'] %></td>
+          <td><%= warning['message'] %></td>
+        </tr>
+      <% end %>
+    </table>
+    <p></p>
+
+    <h2><%= "Generated on #{Time.now}" %></h2>
+    <%#= @previous_reports %>
+  </body>
+</html>
