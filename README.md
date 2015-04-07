@@ -16,7 +16,7 @@ $ gem install metric_fu
 Add below line to your Gemfile:
 
 ```
-gem 'qmeter', '~> 1.0.0'
+gem 'qmeter', :git => 'git://github.com/rohit-clarion/qmeter.git'
 ```
 
 And then execute:
