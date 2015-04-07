@@ -106,7 +106,7 @@
     <table width="70%" margin="auto" border="1%">
       <tr>
         <th>
-          <h3>Security Warnings</h3>
+          <h3>Security Warnings ss</h3>
           <div class="pie" style="<%= if @brakeman_warnings.count > @security_warnings then "background-color:red;" else "background-color:green;" end  %>">
             <div class="title"></div>
             <div class="outer-right mask" id= "10deg"></div>
@@ -197,6 +197,50 @@
       <% end %>
     </table>
     <p></p>
+
+    <table width="80%">
+      <tr>
+      <th><div id="lineCanvas" style="position:absolute;height:300px;width:300px;"></div></th>
+      <th><div id="line1Canvas" style=" position:absolute;height:300px;width:300px;"></div></th>
+      <th><div id="line2Canvas" style="position:absolute;height:300px;width:300px;"></div></th>
+      <th><div id="line3Canvas" style="position:absolute;height:300px;width:300px;"></div></th>
+      </tr>
+    </table>
+
+    <script type="text/javascript">
+      var g = new line_graph();
+      g.add('c1', 140);
+      g.add('c2', 90);
+      g.add('c3', 100);
+      g.add('c4', 54);
+      g.add('c5', 0);
+
+      var m = new line_graph();
+      m.add('c1', 200);
+      m.add('c2', 100);
+      m.add('c3', 9000);
+      m.add('c4', 8000);
+      m.add('c5', 70);
+
+      var n = new line_graph();
+      n.add('c1', 200);
+      n.add('c2', 105);
+      n.add('c3', 90);
+      n.add('c4', 35);
+      n.add('c5', 10);
+
+      var q = new line_graph();
+      q.add('c1', 20);
+      q.add('c2', 18);
+      q.add('c3', 15);
+      q.add('c4', 4);
+      q.add('c5', 1);
+
+      g.render("lineCanvas", "flog Graph");
+      m.render("line1Canvas", "Rails best practise Graph");
+      n.render("line2Canvas", "Rails best practise Graph");
+      q.render("line3Canvas", "flog Grap");
+    </script>
 
     <h2><%= "Generated on #{Time.now}" %></h2>
     <%#= @previous_reports %>

@@ -5,10 +5,17 @@ require "qmeter/engine"
 
 module Qmeter
 	def initialize_thresholds(thresholds)
-		@security_warnings = thresholds['security_warnings']
-		@rails_best_practices = thresholds['rails_best_practices']
-		@flog_complexity = thresholds['flog_complexity']
-		@stats_ratio = thresholds['stats_ratio']
+		@security_warnings_min = thresholds['security_warnings_min']
+		@security_warnings_max = thresholds['security_warnings_max']
+
+		@rails_best_practices_min = thresholds['rails_best_practices_min']
+		@rails_best_practices_max = thresholds['rails_best_practices_max']
+
+		@flog_complexity_min = thresholds['flog_complexity_min']
+		@flog_complexity_max = thresholds['flog_complexity_max']
+
+		@stats_ratio_min = thresholds['stats_ratio_min']
+		@stats_ratio_max = thresholds['stats_ratio_max']
 	end
 
   def collect_brakeman_details
@@ -16,15 +23,11 @@ module Qmeter
 		file = File.read("#{Rails.root}/report.json")
 		data_hash = JSON.parse(file)
 
-	  # Create an array of all warnings
-	  @brakeman_warnings = []
-	  data_hash['warnings'].each do |warning|
-	  	hash = {}
-	  	hash['warning_type'] = warning['warning_type']
-	  	hash['message'] = warning['message']
-	  	hash['file'] = warning['file']
-	  	@brakeman_warnings.push(hash)
-	  end
+	  warning_type = data_hash['warnings'].map {|a| a = a['warning_type']}
+	  @brakeman_warnings = Hash.new(0)
+	  warning_type.each do |v|
+		  @brakeman_warnings[v] += 1
+		end
 	end
 
 	def collect_metric_fu_details
@@ -61,11 +64,6 @@ module Qmeter
 	end
 
   def generate_final_report
-  # 	spec = Gem::Specification.find_by_name 'qmeter'
-		# erb_file = "/#{spec.gem_dir}/lib/qmeter/templates/summary_report.html.erb"
-		# html_file = File.basename(erb_file, '.erb') 
-		# erb_str = File.read(erb_file)
-
 		p "===== Collecting data from metric_fu_report report ====="
 		collect_metric_fu_details
 
@@ -76,30 +74,53 @@ module Qmeter
 
   	p "===== Collecting previous reports ====="
   	get_previour_result
-
-	 #  begin
-		# 	renderer = ERB.new(erb_str)
-		# 	result = renderer.result()
-
-		# 	File.open(html_file, 'w') do |f|
-		# 	  f.write(result)
-		# 	end
-		# rescue StandardError => e
-	 #  	p e.message
-	 #  	p e.backtrace
-	 #  end
+  	choose_color
 	end
 
 	def save_report
 		flag = false
 		flag = File.file?("#{Rails.root}/summary_report.csv")
 		CSV.open("#{Rails.root}/summary_report.csv", "a") do |csv|
-			csv << ['flog','stats','rails_best_practices','warnings', 'timestamp'] if flag == false
-		  csv << [@flog_info.first['flog'], @stats_info.first['stats'], @rails_best_practices_info.first['rails_best_practices'], @brakeman_warnings.count, Time.now]
+			# csv << ['flog','stats','rails_best_practices','warnings', 'timestamp'] if flag == false
+		  csv << [@flog_info.first['flog'], @stats_info.first['stats'], @rails_best_practices_info.first['rails_best_practices'], @brakeman_warnings.count, Time.now.strftime("%d/%m/%Y")]
 		end
 	end
 
 	def get_previour_result
 		@previous_reports = CSV.read("#{Rails.root}/summary_report.csv") if File.file?("#{Rails.root}/summary_report.csv")
+	end
+
+	def choose_color
+    if @brakeman_warnings.count > @security_warnings_max
+      @brakeman_warnings_rgy = 'background-color:#D00000;'
+    elsif @brakeman_warnings.count > @security_warnings_min && @brakeman_warnings.count < @security_warnings_max
+      @brakeman_warnings_rgy = 'background-color:yellow;'
+    else
+      @brakeman_warnings_rgy = 'background-color:#006633;'
+    end
+
+    if @rails_best_practices_info.first['rails_best_practices'] > @rails_best_practices_max
+      @rails_best_practices_rgy = 'background-color:#D00000;'
+    elsif @rails_best_practices_info.first['rails_best_practices'] > @rails_best_practices_min && @rails_best_practices_info.first['rails_best_practices'] < @rails_best_practices_max
+      @rails_best_practices_rgy = 'background-color:yellow;'
+    else
+      @rails_best_practices_rgy = 'background-color:#006633;'
+    end
+
+    if @flog_info.first['flog'] > @flog_complexity_max
+      @flog_rgy = 'background-color:#D00000;'
+    elsif @flog_info.first['flog'] > @flog_complexity_min && @flog_info.first['flog'] < @flog_complexity_max
+      @flog_rgy = 'background-color:yellow;'
+    else
+      @flog_rgy = 'background-color:#006633;'
+    end
+
+    if @stats_info.first['stats'] > @stats_ratio_max
+      @stats_rgy = 'background-color:#D00000;'
+    elsif @stats_info.first['stats'] > @stats_ratio_min && @stats_info.first['stats'] < @stats_ratio_max
+      @stats_rgy = 'background-color:yellow;'
+    else
+      @stats_rgy = 'background-color:#006633;'
+    end
 	end
 end

@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  get 'report' => 'qmeter/report#index'
+  get 'qmeter' => 'qmeter/report#index'
 end

@@ -1,0 +1,140 @@
+#jquery-script-menu {
+position: fixed;
+height: 90px;
+width: 100%;
+top: 0;
+left: 0;
+border-top: 5px solid #316594;
+background: #fff;
+-moz-box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.16);
+-webkit-box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.16);
+box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.16);
+z-index: 999999;
+padding: 10px 0;
+-webkit-box-sizing:content-box;
+-moz-box-sizing:content-box;
+box-sizing:content-box;
+}
+
+.jquery-script-center {
+width: 960px;
+margin: 0 auto;
+}
+.jquery-script-center ul {
+width: 212px;
+float:left;
+line-height:45px;
+margin:0;
+padding:0;
+list-style:none;
+}
+.jquery-script-center a {
+  text-decoration:none;
+}
+.jquery-script-ads {
+width: 728px;
+height:90px;
+float:right;
+}
+.jquery-script-clear {
+clear:both;
+height:0;
+}
+
+/* CSS style used for HTML reports */
+      body {
+        font-family: sans-serif;
+        color: #161616;
+        width: 80%;
+        margin: auto;
+      }
+      th {
+         /*background-color: #980905;*/
+         /*border-bottom: 5px solid #530200;*/
+         /*color: white;*/
+         font-size: 11pt;
+         padding: 1px 8px 1px 8px;
+       }
+
+       td {
+         border-bottom: 2px solid white;
+         font-family: monospace;
+         padding: 5px 8px 1px 8px;
+       }
+
+       table {
+         /*background-color: #FCF4D4;*/
+         border-collapse: collapse;
+         /*color: black;*/
+       }
+
+       tr.first {
+         border-top: 1px solid #7ecc54;
+         padding-top: 2px;
+       }
+
+       table{
+        width: 100%;
+        border: 1px;
+        border-color: black;
+       }
+       th, td{
+        width: 20%;
+       }
+
+      .pie .title {
+        position: relative;
+        bottom: -40px;
+        text-align: top;
+        width: 50%;
+      }
+
+      .content {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        background-color: #fff;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        line-height: 100px;
+        font-family: arial, sans-serif;
+        font-size: 30px;
+        text-align: center;
+        z-index: 2;
+      }
+      .content span {
+        opacity: 0;
+        animation: load-content 1s;
+        animation-fill-mode: forwards;
+        animation-delay: 0.6s;
+        -webkit-animation: load-content 3s;
+        -webkit-animation-fill-mode: forwards;
+        -webkit-animation-delay: 0.6s;
+      }
+      @keyframes load-content {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 5;
+        }
+      }
+      @-webkit-keyframes load-content {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .pie {
+          width:160px;
+          height:160px;
+          left: 30px;
+          -moz-border-radius:100px;
+          -webkit-border-radius:100px;
+          border-radius:100px;
+          position:relative;
+      }

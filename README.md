@@ -37,10 +37,10 @@ Run below commands
 
 ```
 	$ brakeman -o report.html -o report.json
-	$ metric_fu
+	$ metric_fu --out /path/to/the/app/root/public/metric_fu
 ```
 
-### qmeter is not yet ready for use but still you can use it for testing purpose.
+#### qmeter is not yet ready for use but still you can use it for testing purpose.
 
 TODO:: 
 
@@ -50,10 +50,11 @@ TODO::
 
 Run AppReoprter
 
+To run Qmeter visit
+
 ```
-$ rake qmeter:run
+localhost:3000/qmeter
 ```
-Check for the summary_report.html in root folder
 
 ## Contributing
 
