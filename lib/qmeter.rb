@@ -29,6 +29,7 @@ module Qmeter
 	  warning_type.each do |v|
 		  @brakeman_warnings[v] += 1
 		end
+		@warnings_count = data_hash['warnings'].count
 	end
 
 	def collect_metric_fu_details
@@ -89,9 +90,9 @@ module Qmeter
 
 	def choose_color
 		# Check threashhold
-    if @brakeman_warnings.count > @security_warnings_max
+    if @warnings_count > @security_warnings_max
       @brakeman_warnings_rgy = 'background-color:#D00000;'
-    elsif @brakeman_warnings.count > @security_warnings_min && @brakeman_warnings.count < @security_warnings_max
+    elsif @warnings_count > @security_warnings_min && @warnings_count < @security_warnings_max
       @brakeman_warnings_rgy = 'background-color:yellow;'
     else
       @brakeman_warnings_rgy = 'background-color:#006633;'
