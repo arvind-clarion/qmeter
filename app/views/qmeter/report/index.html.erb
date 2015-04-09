@@ -6,129 +6,178 @@
     <%= stylesheet_link_tag 'qmeter' %>
   </head>
   <body>
-    
-    <table width="70%" margin="auto" border="1%">
-      <tr>
-        <th>
-          <h3>Security Warnings</h3>
-          <div class="pie" style="<%= @brakeman_warnings_rgy %>">
-            <div class="title"></div>
-            <div class="outer-right mask" id= "10deg"></div>
-            <div class="inner-right"></div>
+    <h2 class="tophead"> Q-meter Dashboard</h2>
+    <hr/>
 
-            <div class="outer-left mask">
-              <div class="inner-left"></div>
+    <table class="headings" width="100%" border="1%">
+      <tr>
+        <th><h3>Security Warnings</h3></th>
+        <th ><h3>Rails Best Practise</h3></th>
+        <th><h3>Flog</h3></th>
+        <th><h3>Stat</h3></th>
+      </tr>
+
+      <tr bgcolor="white">
+        <th>
+          <a href="report.html" target="_blank">
+            <div class="pie" style="<%= @brakeman_warnings_rgy %>">
+              <div class="title"></div>
+              <div class="outer-right mask" id= "10deg"></div>
+              <div class="inner-right"></div>
+
+              <div class="outer-left mask">
+                <div class="inner-left"></div>
+              </div>
+              <div class="content">
+                <span><%= @brakeman_warnings.count %></span>
+              </div>
             </div>
-            <div class="content">
-              <span><%= @brakeman_warnings.count %></span>
-            </div>
-          </div><p></p>
+          </a>
+          <p></p>
           <a href="report.html" target="_blank">Report</a>
         </th>
 
         <th>
-          <h3>Rails Best Practise</h3>
-          <div class="pie" style="<%= @rails_best_practices_rgy %>">
-            <div class="title"></div>
-            <div class="outer-right mask" id= "10deg">
-            </div>
+          <a href="/metric_fu/rails_best_practices.html" target="_blank">
+            <div class="pie" style="<%= @rails_best_practices_rgy %>">
+              <div class="title"></div>
+              <div class="outer-right mask" id= "10deg">
+              </div>
 
-            <div class="outer-left mask">
-              <div class="inner-left"></div>
+              <div class="outer-left mask">
+                <div class="inner-left"></div>
+              </div>
+              <div class="content">
+                <span><%= @rails_best_practices_info.first['rails_best_practices'] %></span>
+              </div>
             </div>
-            <div class="content">
-              <span><%= @rails_best_practices_info.first['rails_best_practices'] %></span>
-            </div>
-          </div>
+          </a>
           <p></p>
           <a href="/metric_fu/rails_best_practices.html" target="_blank">Report</a>
         </th>
 
         <th>
-          <h3>Flog</h3>
-          <div class="pie" style="<%= @flog_rgy %>">
-            <div class="title"></div>
-            <div class="outer-right mask" id= "10deg">
-              <div class="inner-right"></div>
-            </div>
+          <a href="/metric_fu/flog.html" target="_blank">
+            <div class="pie" style="<%= @flog_rgy %>">
+              <div class="title"></div>
+              <div class="outer-right mask" id= "10deg">
+                <div class="inner-right"></div>
+              </div>
 
-            <div class="outer-left mask">
-              <div class="inner-left"></div>
+              <div class="outer-left mask">
+                <div class="inner-left"></div>
+              </div>
+              <div class="content">
+                <span><%= @flog_info.first['flog'] %></span>
+              </div>
             </div>
-            <div class="content">
-              <span><%= @flog_info.first['flog'] %></span>
-            </div>
-          </div><p></p>
+          </a>
+          <p></p>
           <a href="/metric_fu/flog.html" target="_blank">Report</a>
         </th>
 
         <th>
-          <h3>Stat</h3>
-          <div class="pie" style="<%= @stats_rgy %>">
-            <div class="title"></div>
-            <div class="outer-right mask" id= "10deg">
-              <div class="inner-right"></div>
-            </div>
+          <a href="/metric_fu/stats.html" target="_blank">
+            <div class="pie" style="<%= @stats_rgy %>">
+              <div class="title"></div>
+              <div class="outer-right mask" id= "10deg">
+                <div class="inner-right"></div>
+              </div>
 
-            <div class="outer-left mask">
-              <div class="inner-left"></div>
+              <div class="outer-left mask">
+                <div class="inner-left"></div>
+              </div>
+              <div class="content">
+                <span><%= @stats_info.first['stats'] %></span>
+              </div>
             </div>
-            <div class="content">
-              <span><%= @stats_info.first['stats'] %></span>
-            </div>
-          </div><p></p>
+          </a>
+          <p></p>
           <a href="/metric_fu/stats.html" target="_blank">Report</a>
         </th>
       </tr>
     </table>
+    <p>&nbsp;</p>
+
+    <table align="left" bgcolor="white" style="width:25%; font-size: 5pt;float: right;" border="2px">
+      <tr bgcolor="#A5FF88">
+          <td colspan="2"><h3 align="center" style="color: #195319; font-size: 8pt;">Security Warnings
+      </tr>
+      <% @brakeman_warnings.each do |warning| %>
+        <tr><td><%= warning[0] %></td><td><%= warning[1] %></td></tr>
+      <% end %>
+    </table>
     <p></p>
     
-    <h2>Security Warnings</h2>
-    <% @brakeman_warnings.each do |warning| %>
-      <li><b><%= warning[0] %></b> => <%= warning[1] %></li>
-    <% end %>
-    <p></p>
-
-    <p>
-      <h2>History</h2>
-    
-      <h3>flog</h3>
-      <canvas id="flog" width="500" height="300" align="center"></canvas>
-
-      <h3>best_practise</h3>
-      <canvas id="best_practise" width="500" height="300" align="center"></canvas>
-
-      <h3>stats</h3>
-      <canvas id="stats" width="500" height="300" align="center"></canvas>
-
-      <h3>security_warnings</h3>
-      <canvas id="security_warnings" width="500" height="300" align="center"></canvas>
-    </p>
-
-    <b><%= "Generated on #{Time.now}" %></b>
+  
+    <table  border="1px" style="width: 70%; float: left;">
+      <tr bgcolor="#A5FF88">
+      <td colspan="2"><h2 align="center" style="font-size: 12pt"> History</h2>
+      </tr>
+      <tr>
+        <th bgcolor="white"><h3>flog</h3>
+        <canvas id="flog" width="250" height="150" align="center"></canvas>
+        </th>
+        <th bgcolor="white">
+        <h3>best_practise</h3>
+        <canvas id="best_practise" width="250" height="150" align="center"></canvas>
+        </th>
+      </tr>
+      <tr>
+        <th bgcolor="white">
+        <h3>stats</h3>
+        <canvas id="stats" width="250" height="150" align="center"></canvas>
+        </th>
+        <th bgcolor="white">
+        <h3>security_warnings</h3>
+        <canvas id="security_warnings" width="250" height="150" align="center"></canvas>
+        </th>
+      </tr>
+      <!-- tr bgcolor="#A5FF88">
+        <td colspan="2" align="center" style="font-size: 9pt;"><%#= "Generated on #{Time.now}" %></td>
+      </tr> -->
+    </table>
 
     <%= javascript_include_tag 'jquery-v1.11.2' %>
     <%= javascript_include_tag 'qmeter' %>
-    stylesheet_link_tag
     <script type="text/javascript">
-       // Custom JS
+      // Custom JS
+      // Get previous report data
       var data = <%= raw @previous_reports.to_json %>;
 
+      // Transpose array
       var newArray = data[0].map(function(col, i) { 
         return data.map(function(row) { 
           return row[i] 
         })
       });
 
+
+      // Get time intervals
       time = newArray[newArray.length-1]
       
+      // Get data of each modules
       arr_flog = newArray[newArray.length-5]
       arr_stats = newArray[newArray.length-4]
       arr_best_practise = newArray[newArray.length-3]
       arr_security_warnings = newArray[newArray.length-2]
 
-      $( document ).ready(function() {
+      // Parse flog & stats data into float
+      for( var i = 0, len = arr_flog.length; i < len; i++ ) {
+        arr_flog[i] = parseFloat( arr_flog[i] );
+      }
+      for( var i = 0, len = arr_stats.length; i < len; i++ ) {
+        arr_stats[i] = parseFloat( arr_stats[i] );
+      }
+      for( var i = 0, len = arr_best_practise.length; i < len; i++ ) {
+        arr_best_practise[i] = parseInt( arr_best_practise[i] );
+      }
+      for( var i = 0, len = arr_security_warnings.length; i < len; i++ ) {
+        arr_security_warnings[i] = parseInt( arr_security_warnings[i] );
+      }
 
+      // create charts
+      $( document ).ready(function() {
         var flog = {
           node: "flog",
           dataset: arr_flog,
@@ -143,10 +192,8 @@
           node: "stats",
           dataset: arr_stats,
           labels: time,
-          pathcolor: "#288ed4",
-          fillcolor: "#8e8e8e",
-          xPadding: 0,
-          yPadding: 1,
+          pathcolor: "#FF9933",
+          fillcolor: "#FF9933",
           ybreakperiod: 0.5,
         };
         drawlineChart(stats);
@@ -155,9 +202,9 @@
           node: "best_practise",
           dataset: arr_best_practise,
           labels: time,
-          pathcolor: "#288ed4",
-          fillcolor: "#8e8e8e",
-          ybreakperiod: 50
+          pathcolor: "#8A008A",
+          fillcolor: "#8A008A",
+          ybreakperiod: 10
         };
         drawlineChart(best_practise);
 
@@ -165,8 +212,8 @@
           node: "security_warnings",
           dataset: arr_security_warnings,
           labels: time,
-          pathcolor: "#288ed4",
-          fillcolor: "#8e8e8e",
+          pathcolor: "#FF0000",
+          fillcolor: "#FF0000",
           ybreakperiod: 3
         };
         drawlineChart(security_warnings);

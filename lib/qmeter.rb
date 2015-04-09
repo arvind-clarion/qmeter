@@ -5,6 +5,7 @@ require "qmeter/engine"
 
 module Qmeter
 	def initialize_thresholds(thresholds)
+		# Initialize threshold values
 		@security_warnings_min = thresholds['security_warnings_min']
 		@security_warnings_max = thresholds['security_warnings_max']
 
@@ -64,33 +65,30 @@ module Qmeter
 	end
 
   def generate_final_report
-		p "===== Collecting data from metric_fu_report report ====="
 		collect_metric_fu_details
-
-  	p "===== Collecting data from brakeman report ====="
   	collect_brakeman_details
-  	
   	@app_root = Rails.root
-
-  	p "===== Collecting previous reports ====="
   	get_previour_result
   	choose_color
 	end
 
 	def save_report
+		# Save report data into the CSV
 		flag = false
 		flag = File.file?("#{Rails.root}/summary_report.csv")
 		CSV.open("#{Rails.root}/summary_report.csv", "a") do |csv|
 			# csv << ['flog','stats','rails_best_practices','warnings', 'timestamp'] if flag == false
-		  csv << [@flog_info.first['flog'], @stats_info.first['stats'], @rails_best_practices_info.first['rails_best_practices'], @brakeman_warnings.count, Time.now.strftime("%d/%m/%Y")]
+		  csv << [@flog_info.first['flog'].to_f, @stats_info.first['stats'].to_f, @rails_best_practices_info.first['rails_best_practices'], @brakeman_warnings.count, Time.now.strftime("%d/%m")]
 		end
 	end
 
 	def get_previour_result
-		@previous_reports = CSV.read("#{Rails.root}/summary_report.csv") if File.file?("#{Rails.root}/summary_report.csv")
+		# Get previous report data
+		@previous_reports = CSV.read("#{Rails.root}/summary_report.csv").last(4) if File.file?("#{Rails.root}/summary_report.csv")
 	end
 
 	def choose_color
+		# Check threashhold
     if @brakeman_warnings.count > @security_warnings_max
       @brakeman_warnings_rgy = 'background-color:#D00000;'
     elsif @brakeman_warnings.count > @security_warnings_min && @brakeman_warnings.count < @security_warnings_max

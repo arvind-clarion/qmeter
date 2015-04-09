@@ -51,13 +51,13 @@ height:0;
       th {
          /*background-color: #980905;*/
          /*border-bottom: 5px solid #530200;*/
-         /*color: white;*/
-         font-size: 11pt;
+         color: #003D00;
+         font-size: 8pt;
          padding: 1px 8px 1px 8px;
        }
 
        td {
-         border-bottom: 2px solid white;
+         border-bottom: 1px solid black;
          font-family: monospace;
          padding: 5px 8px 1px 8px;
        }
@@ -79,7 +79,13 @@ height:0;
         border-color: black;
        }
        th, td{
+        font-size: 8pt;
         width: 20%;
+       }
+
+       .headings tr:first-child th {
+        background-color:  #A5FF88;
+        padding-top: 10px;
        }
 
       .pie .title {
@@ -90,16 +96,16 @@ height:0;
       }
 
       .content {
-        width: 90px;
-        height: 90px;
+        width: 80px;
+        height: 80px;
         border-radius: 50%;
-        background-color: #fff;
+        background-color: white;
         position: absolute;
         top: 20px;
         left: 20px;
-        line-height: 100px;
+        line-height: 80px;
         font-family: arial, sans-serif;
-        font-size: 30px;
+        font-size: 25px;
         text-align: center;
         z-index: 2;
       }
@@ -130,11 +136,25 @@ height:0;
       }
 
       .pie {
-          width:160px;
-          height:160px;
-          left: 30px;
+          width:120px;
+          height:120px;
+          left: 50px;
+          margin-top: 10px;
           -moz-border-radius:100px;
           -webkit-border-radius:100px;
           border-radius:100px;
           position:relative;
       }
+       a {
+        text-decoration: none;
+        }
+
+        h2.tophead {
+   margin: 0;
+   color: green;
+   
+    }
+    hr{
+      margin-top: 6px;
+      margin-bottom: 20px;
+    }

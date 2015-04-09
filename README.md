@@ -2,7 +2,7 @@
 
 Qmeter fetch data from the already generated application reports through brakeman and metric_fu. 
 Based on some thresholds it checks for some major areas like security issues, test coverage and Rails best practices etc.
-It generates HTML report in applications root folder once you run final command.
+Also Qmeter has a provision to save report data into CSV. Based on the previous reports data show it up into the graph.
 
 ## Installation
 
@@ -16,7 +16,7 @@ $ gem install metric_fu
 Add below line to your Gemfile:
 
 ```
-gem 'qmeter', :git => 'git://github.com/rohit-clarion/qmeter.git'
+gem 'qmeter', :git => 'git://github.com/rohit-clarion/qmeter.git', :group => :development
 ```
 
 And then execute:
@@ -33,17 +33,17 @@ Or install it yourself as:
 
 ## Usage
 
-#### qmeter is not yet ready for use but still you can use it for testing purpose.
+#### qmeter is not yet ready for use, but still you can use it for testing purpose.
 
 
-Run below commands
+Run below commands, also add your root path while running metric_fu command
 
 ```
 	$ brakeman -o report.html -o report.json
 	$ metric_fu --out /path/to/the/app/root/public/metric_fu
 ```
 
-Run AppReoprter
+Run Qmeter
 
 To run Qmeter visit
 
@@ -56,7 +56,7 @@ TODO::
 1. Update passing and failing areas conditions into the templates.
 2. Make report template more attractive.
 3. Make it run the brakeman and metric_fu commands internally instead of manually.
-
+4. Save report details at every commit.
 
 ## Contributing
 

@@ -2,7 +2,9 @@ require 'fileutils'
 
 module Qmeter
   class ReportController < ::ApplicationController
-  	
+
+  	# GET::report#index
+  	# localhost:3000/qmeter
     def index
     	thresholds = {}
 	  	thresholds['security_warnings_min'] = 1
@@ -18,13 +20,16 @@ module Qmeter
 	  	thresholds['stats_ratio_max'] = 0.5
 
 			extend Qmeter
+			# Call methods from lib/qmeter.rb
 			self.initialize_thresholds(thresholds)
 			self.generate_final_report
 			self.save_report
 
+			# move report.html from root to the /public folder
 			FileUtils.mv('report.html', 'public/') if File.file?("#{Rails.root}/report.html")
 
     	render layout: false
     end
+
   end
 end
