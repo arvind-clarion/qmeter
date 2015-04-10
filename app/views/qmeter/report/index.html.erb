@@ -48,7 +48,7 @@
                 <div class="inner-left"></div>
               </div>
               <div class="content">
-                <span><%= @rails_best_practices_info.first['rails_best_practices'] %></span>
+                <span><%= @rails_best_practices_total %></span>
               </div>
             </div>
           </a>
@@ -68,7 +68,7 @@
                 <div class="inner-left"></div>
               </div>
               <div class="content">
-                <span><%= @flog_info.first['flog'] %></span>
+                <span><%= @flog_average_complexity %></span>
               </div>
             </div>
           </a>
@@ -88,7 +88,7 @@
                 <div class="inner-left"></div>
               </div>
               <div class="content">
-                <span><%= @stats_info.first['stats'] %></span>
+                <span><%= @stats_code_to_test_ratio %></span>
               </div>
             </div>
           </a>
@@ -99,7 +99,7 @@
     </table>
     <p>&nbsp;</p>
 
-    <table align="left" bgcolor="white" style="width:25%; font-size: 5pt;float: right;" border="2px">
+    <table align="left" bgcolor="white" style="width:25%; font-size: 5pt;float: left;" border="2px">
       <tr bgcolor="#A5FF88">
           <td colspan="2"><h3 align="center" style="color: #195319; font-size: 8pt;">Security Warnings
       </tr>
@@ -110,7 +110,7 @@
     <p></p>
     
   
-    <table  border="1px" style="width: 70%; float: left;">
+    <table  border="1px" style="width: 70%; float: right;">
       <tr bgcolor="#A5FF88">
       <td colspan="2"><h2 align="center" style="font-size: 12pt"> History</h2>
       </tr>

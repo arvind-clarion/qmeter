@@ -35,34 +35,19 @@ module Qmeter
 	def collect_metric_fu_details
 	  # parsing metric_fu report from .yml file
 	  @surveys = YAML.load(ERB.new(File.read("#{Rails.root}/tmp/metric_fu/report.yml")).result)
-    @matric_fu_info = []
 
     @surveys.each do |survey|
     	unless survey.blank?
 	      case survey[0]
 				when :flog
-	      	hash = {}
-					hash['flog'] = survey[1][:average].round(1)
-					@matric_fu_info.push(hash)
-    			p "===== From #{survey[0]} ====="
+    			@flog_average_complexity = survey[1][:average].round(1)
 				when :stats
-					hash = {}
-					hash['stats'] = survey[1][:code_to_test_ratio]
-					hash['codeLOC'] = survey[1][:codeLOC]
-					hash['testLOC'] = survey[1][:testLOC]
-					@matric_fu_info.push(hash) 
-					p "===== From #{survey[0]} ====="
+					@stats_code_to_test_ratio = survey[1][:code_to_test_ratio]
 			  when :rails_best_practices
-			  	hash = {}
-			  	hash['rails_best_practices'] = survey[1][:total].first.gsub(/[^\d]/, '').to_i
-			  	@matric_fu_info.push(hash)
-			  	p "===== From #{survey[0]} ====="
+			  	@rails_best_practices_total = survey[1][:total].first.gsub(/[^\d]/, '').to_i
 				end
 			end
     end
-    @flog_info = @matric_fu_info.select{|d| d.keys.first == 'flog'}
-  	@stats_info = @matric_fu_info.select{|d| d.keys.first == 'stats'}
-  	@rails_best_practices_info = @matric_fu_info.select{|d| d.keys.first == 'rails_best_practices'}
 	end
 
   def generate_final_report
@@ -70,22 +55,21 @@ module Qmeter
   	collect_brakeman_details
   	@app_root = Rails.root
   	get_previour_result
-  	choose_color
 	end
 
 	def save_report
 		# Save report data into the CSV
 		flag = false
-		flag = File.file?("#{Rails.root}/summary_report.csv")
-		CSV.open("#{Rails.root}/summary_report.csv", "a") do |csv|
+		flag = File.file?("#{Rails.root}/qmeter.csv")
+		CSV.open("#{Rails.root}/qmeter.csv", "a") do |csv|
 			# csv << ['flog','stats','rails_best_practices','warnings', 'timestamp'] if flag == false
-		  csv << [@flog_info.first['flog'].to_f, @stats_info.first['stats'].to_f, @rails_best_practices_info.first['rails_best_practices'], @brakeman_warnings.count, Time.now.strftime("%d/%m")]
+		  csv << [@flog_average_complexity, @stats_code_to_test_ratio, @rails_best_practices_total, @warnings_count, Time.now.strftime("%d/%m")]
 		end
 	end
 
 	def get_previour_result
 		# Get previous report data
-		@previous_reports = CSV.read("#{Rails.root}/summary_report.csv").last(4) if File.file?("#{Rails.root}/summary_report.csv")
+		@previous_reports = CSV.read("#{Rails.root}/qmeter.csv").last(4) if File.file?("#{Rails.root}/qmeter.csv")
 	end
 
 	def choose_color
@@ -98,25 +82,25 @@ module Qmeter
       @brakeman_warnings_rgy = 'background-color:#006633;'
     end
 
-    if @rails_best_practices_info.first['rails_best_practices'] > @rails_best_practices_max
+    if @rails_best_practices_total > @rails_best_practices_max
       @rails_best_practices_rgy = 'background-color:#D00000;'
-    elsif @rails_best_practices_info.first['rails_best_practices'] > @rails_best_practices_min && @rails_best_practices_info.first['rails_best_practices'] < @rails_best_practices_max
+    elsif @rails_best_practices_total > @rails_best_practices_min && @rails_best_practices_total < @rails_best_practices_max
       @rails_best_practices_rgy = 'background-color:yellow;'
     else
       @rails_best_practices_rgy = 'background-color:#006633;'
     end
 
-    if @flog_info.first['flog'] > @flog_complexity_max
+    if @flog_average_complexity > @flog_complexity_max
       @flog_rgy = 'background-color:#D00000;'
-    elsif @flog_info.first['flog'] > @flog_complexity_min && @flog_info.first['flog'] < @flog_complexity_max
+    elsif @flog_average_complexity > @flog_complexity_min && @flog_average_complexity < @flog_complexity_max
       @flog_rgy = 'background-color:yellow;'
     else
       @flog_rgy = 'background-color:#006633;'
     end
 
-    if @stats_info.first['stats'] > @stats_ratio_max
+    if @stats_code_to_test_ratio > @stats_ratio_max
       @stats_rgy = 'background-color:#D00000;'
-    elsif @stats_info.first['stats'] > @stats_ratio_min && @stats_info.first['stats'] < @stats_ratio_max
+    elsif @stats_code_to_test_ratio > @stats_ratio_min && @stats_code_to_test_ratio < @stats_ratio_max
       @stats_rgy = 'background-color:yellow;'
     else
       @stats_rgy = 'background-color:#006633;'

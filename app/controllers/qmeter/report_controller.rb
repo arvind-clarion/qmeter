@@ -23,10 +23,10 @@ module Qmeter
 			# Call methods from lib/qmeter.rb
 			self.initialize_thresholds(thresholds)
 			self.generate_final_report
-			self.save_report
+			self.choose_color
 
 			# move report.html from root to the /public folder
-			FileUtils.mv('report.html', 'public/') if File.file?("#{Rails.root}/report.html")
+			FileUtils.cp('report.html', 'public/') if File.file?("#{Rails.root}/report.html")
 
     	render layout: false
     end
