@@ -101,42 +101,51 @@
 
     <table align="left" bgcolor="white" style="width:25%; font-size: 5pt;float: left;" border="2px">
       <tr bgcolor="#A5FF88">
-          <td colspan="2"><h3 align="center" style="color: #195319; font-size: 8pt;">Security Warnings
+        <td colspan="2"><h3 align="center" style="color: #195319; font-size: 8pt;">Security Warnings
       </tr>
-      <% @brakeman_warnings.each do |warning| %>
-        <tr><td><%= warning[0] %></td><td><%= warning[1] %></td></tr>
+      <% unless @brakeman_warnings.blank? %>
+        <% @brakeman_warnings.each do |warning| %>
+          <tr><td><%= warning[0] %></td><td><%= warning[1] %></td></tr>
+        <% end %>
+      <% else %>
+        <tr><td>No Security Warnings</td></tr>
       <% end %>
     </table>
     <p></p>
     
-  
     <table  border="1px" style="width: 70%; float: right;">
       <tr bgcolor="#A5FF88">
-      <td colspan="2"><h2 align="center" style="font-size: 12pt"> History</h2>
+        <td colspan="2"><h2 align="center" style="font-size: 12pt"> History</h2>
       </tr>
-      <tr>
-        <th bgcolor="white"><h3>flog</h3>
-        <canvas id="flog" width="250" height="150" align="center"></canvas>
-        </th>
-        <th bgcolor="white">
-        <h3>best_practise</h3>
-        <canvas id="best_practise" width="250" height="150" align="center"></canvas>
-        </th>
-      </tr>
-      <tr>
-        <th bgcolor="white">
-        <h3>stats</h3>
-        <canvas id="stats" width="250" height="150" align="center"></canvas>
-        </th>
-        <th bgcolor="white">
-        <h3>security_warnings</h3>
-        <canvas id="security_warnings" width="250" height="150" align="center"></canvas>
-        </th>
-      </tr>
-      <!-- tr bgcolor="#A5FF88">
-        <td colspan="2" align="center" style="font-size: 9pt;"><%#= "Generated on #{Time.now}" %></td>
-      </tr> -->
-    </table>
+      <% unless @previous_reports.blank? %>        
+        <tr>
+          <th bgcolor="white"><h3>flog</h3>
+          <canvas id="flog" width="250" height="150" align="center"></canvas>
+          </th>
+          <th bgcolor="white">
+          <h3>best_practise</h3>
+          <canvas id="best_practise" width="250" height="150" align="center"></canvas>
+          </th>
+        </tr>
+        <tr>
+          <th bgcolor="white">
+          <h3>stats</h3>
+          <canvas id="stats" width="250" height="150" align="center"></canvas>
+          </th>
+          <th bgcolor="white">
+          <h3>security_warnings</h3>
+          <canvas id="security_warnings" width="250" height="150" align="center"></canvas>
+          </th>
+        </tr>
+        <!-- tr bgcolor="#A5FF88">
+          <td colspan="2" align="center" style="font-size: 9pt;"><%#= "Generated on #{Time.now}" %></td>
+        </tr> -->
+        <% else %>
+          <tr>
+            <td colspan="2">No commits with Qmeter yet.</td>
+          </tr>
+        <% end %>
+      </table>
 
     <%= javascript_include_tag 'jquery-v1.11.2' %>
     <%= javascript_include_tag 'qmeter' %>

@@ -24,4 +24,5 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "brakeman"
   spec.add_runtime_dependency "metric_fu"
   spec.add_runtime_dependency "railties"
+  spec.add_runtime_dependency "terminal-table"
 end
