@@ -30,7 +30,7 @@ And then execute:
 
 Run Qmeter
 
-Add below commands into '.git/hook/pre-commit' file to save current quality status.
+Add below commands into ```.git/hook/pre-commit``` file to save quality status before each commit.
 
 ```
 	current_dir=$(pwd)
