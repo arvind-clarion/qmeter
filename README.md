@@ -46,6 +46,8 @@ Then you’ll have to give it execute permission
     $ chmod +x .git/hooks/post-commit
 ```
 
+It's ready to perform now. On every git commit it will check the code quality and saves the result.
+
 To get detailed analysis report visit '/qmeter' 
 
 ```
