@@ -63,7 +63,8 @@ module Qmeter
 		flag = File.file?("#{Rails.root}/qmeter.csv")
 		CSV.open("#{Rails.root}/qmeter.csv", "a") do |csv|
 			# csv << ['flog','stats','rails_best_practices','warnings', 'timestamp'] if flag == false
-		  csv << [@flog_average_complexity, @stats_code_to_test_ratio, @rails_best_practices_total, @warnings_count, Time.now.strftime("%d/%m")]
+	    sha = `git rev-parse HEAD`
+		  csv << [@flog_average_complexity, @stats_code_to_test_ratio, @rails_best_practices_total, @warnings_count, sha]
 		end
 	end
 

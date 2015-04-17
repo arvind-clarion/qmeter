@@ -30,7 +30,7 @@ And then execute:
 
 Run Qmeter
 
-Add below commands into ```.git/hook/pre-commit``` file to save quality status before each commit.
+Add below commands into '.git/hook/post-commit' file to save current quality status.
 
 ```
 	current_dir=$(pwd)
@@ -39,6 +39,11 @@ Add below commands into ```.git/hook/pre-commit``` file to save quality status b
 	metric_fu --out $current_dir/public/metric_fu
 
 	rake qmeter:run
+```
+Then you’ll have to give it execute permission
+
+```
+    $ chmod +x .git/hooks/post-commit
 ```
 
 To get detailed analysis report visit '/qmeter' 

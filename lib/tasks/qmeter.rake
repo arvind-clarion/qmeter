@@ -7,7 +7,7 @@ namespace :qmeter do
 		extend Qmeter
 		self.generate_final_report
     puts "======= Saving Current Analysis Details ======="
-		self.save_report
+    self.save_report
     
     rows = []
     rows << ['Security Warning', @warnings_count]
