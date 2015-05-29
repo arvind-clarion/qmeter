@@ -6,12 +6,15 @@ namespace :qmeter do
 
   task :report do
     puts "*** run brakeman ***"
+     system("current_dir=$(pwd)")
+
 
     system "brakeman -o report.html -o report.json"
 
     puts "*** run metric_fu ***"
 
-    system "metric_fu --out $current_dir/public/metric_fu"
+    system "sudo metric_fu --out $current_dir/public/metric_fu"
+
 
   end
 
