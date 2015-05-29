@@ -3,12 +3,27 @@ require 'terminal-table'
 
 namespace :qmeter do
   desc "Run Qmeter"
+
+  task :report do
+    puts "*** run brakeman ***"
+     system("current_dir=$(pwd)")
+
+
+    system "brakeman -o report.html -o report.json"
+
+    puts "*** run metric_fu ***"
+
+    system "sudo metric_fu --out $current_dir/public/metric_fu"
+
+
+  end
+
   task :run do
-		extend Qmeter
-		self.generate_final_report
+    extend Qmeter
+    self.generate_final_report
     puts "======= Saving Current Analysis Details ======="
     self.save_report
-    
+
     rows = []
     rows << ['Security Warning', @warnings_count]
     rows << ['Flog', @flog_average_complexity]
