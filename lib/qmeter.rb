@@ -75,36 +75,21 @@ module Qmeter
 
 	def choose_color
 		# Check threashhold
-    if @warnings_count > @security_warnings_max
-      @brakeman_warnings_rgy = 'background-color:#D00000;'
-    elsif @warnings_count > @security_warnings_min && @warnings_count < @security_warnings_max
-      @brakeman_warnings_rgy = 'background-color:yellow;'
-    else
-      @brakeman_warnings_rgy = 'background-color:#006633;'
-    end
-
-    if @rails_best_practices_total > @rails_best_practices_max
-      @rails_best_practices_rgy = 'background-color:#D00000;'
-    elsif @rails_best_practices_total > @rails_best_practices_min && @rails_best_practices_total < @rails_best_practices_max
-      @rails_best_practices_rgy = 'background-color:yellow;'
-    else
-      @rails_best_practices_rgy = 'background-color:#006633;'
-    end
-
-    if @flog_average_complexity > @flog_complexity_max
-      @flog_rgy = 'background-color:#D00000;'
-    elsif @flog_average_complexity > @flog_complexity_min && @flog_average_complexity < @flog_complexity_max
-      @flog_rgy = 'background-color:yellow;'
-    else
-      @flog_rgy = 'background-color:#006633;'
-    end
-
-    if @stats_code_to_test_ratio > @stats_ratio_max
-      @stats_rgy = 'background-color:#D00000;'
-    elsif @stats_code_to_test_ratio > @stats_ratio_min && @stats_code_to_test_ratio < @stats_ratio_max
-      @stats_rgy = 'background-color:yellow;'
-    else
-      @stats_rgy = 'background-color:#006633;'
-    end
+    ### @arvind: set color to the variables ###
+    @brakeman_warnings_rgy = set_color(@warnings_count, @security_warnings_max,  @security_warnings_min)
+    @rails_best_practices_rgy = set_color(@rails_best_practices_total, @rails_best_practices_max, @rails_best_practices_min)
+    @flog_rgy = set_color(@flog_average_complexity, @flog_complexity_max, @flog_complexity_min)
+    @stats_rgy = set_color(@stats_code_to_test_ratio, @stats_ratio_max, @stats_ratio_min )
 	end
+
+  ### @arvind: send proper color according to data ###
+  def set_color(count, max, min)
+    if count.present? && count > max
+      'background-color:#D00000;'
+    elsif count.present? && count > min && count < max
+      'background-color:yellow;'
+    else
+      'background-color:#006633;'
+    end
+  end
 end
