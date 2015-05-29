@@ -4,12 +4,127 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Qmeter Report</title>
     <%= stylesheet_link_tag 'qmeter' %>
-  </head>
+    <%= javascript_include_tag 'jquery-v1.11.2' %>
+    <%= javascript_include_tag 'qmeter' %>
+    <script type="text/javascript">
+      // Custom JS
+      // Get previous report data
+      var data = <%= raw @previous_reports.to_json %>;
+
+      // Transpose array
+      var newArray = data[0].map(function(col, i) { 
+        return data.map(function(row) { 
+          return row[i] 
+        })
+      });
+
+
+      // Get time intervals
+      time = newArray[newArray.length-1]
+      
+      // Get data of each modules
+      arr_flog = newArray[newArray.length-5]
+      arr_stats = newArray[newArray.length-4]
+      arr_best_practise = newArray[newArray.length-3]
+      arr_security_warnings = newArray[newArray.length-2]
+
+      // Parse flog & stats data into float
+      arr_flog_hash = [];
+      for( var i = 0, len = arr_flog.length; i < len; i++ ) {
+        arr_flog_hash[i] = {X: time[i] , Y: parseFloat( arr_flog[i] ) };
+      }
+      arr_stats_hash = [];
+      for( var i = 0, len = arr_stats.length; i < len; i++ ) {
+        arr_stats_hash[i] = {X: time[i], Y: parseFloat( arr_stats[i] )};
+      }
+      arr_best_practise_hash = [];
+      for( var i = 0, len = arr_best_practise.length; i < len; i++ ) {
+        arr_best_practise_hash[i] ={X: time[i], Y: parseInt( arr_best_practise[i] )};
+      }
+      arr_security_warnings_hash = [];
+      for( var i = 0, len = arr_security_warnings.length; i < len; i++ ) {
+        arr_security_warnings_hash[i] ={X: time[i], Y: parseInt( arr_security_warnings[i] )};
+      }
+
+         var graphdata1 = {
+            linecolor: "Random",
+            values: arr_flog_hash
+                    };
+
+        var graphdata2 = {
+            linecolor: "Random",
+            values: arr_stats_hash             
+             };
+
+        var graphdata3 = {
+            linecolor: "Random",
+            values: arr_security_warnings_hash
+        };
+
+        var graphdata4 = {
+            linecolor: "Random",
+            title: 'rails practise',
+            values: arr_best_practise_hash
+        };
+        
+        $(function () {
+            $("#Linegraph").SimpleChart({
+                toolwidth: "150",
+                toolheight: "25",
+                axiscolor: "#E6E6E6",
+                textcolor: "#6E6E6E",
+                title: 'flog',
+                data: [graphdata1],
+            });
+
+            $("#Linegraph1").SimpleChart({
+                toolwidth: "150",
+                toolheight: "25",
+                axiscolor: "#E6E6E6",
+                textcolor: "#6E6E6E",
+                title: 'stats',
+                data: [graphdata2],
+            });
+
+            $("#Linegraph2").SimpleChart({
+                toolwidth: "150",
+                toolheight: "25",
+                axiscolor: "#E6E6E6",
+                textcolor: "#6E6E6E",
+                title: 'security warnings',
+                data: [graphdata3],
+            });
+
+            $("#Linegraph3").SimpleChart({
+                toolwidth: "150",
+                toolheight: "25",
+                axiscolor: "#E6E6E6",
+                textcolor: "#6E6E6E",
+                title: 'rails practise',
+                data: [graphdata4],
+            });
+        });
+    </script>
+
+    </head>
   <body>
     <h2 class="tophead"> Q-meter Dashboard</h2>
     <hr/>
+     <table align="right" bgcolor="white" style="width:25%; font-size: 5pt;" border="2px">
+      <tr bgcolor="#A5FF88">
+        <td colspan="2"><h3 align="center" style="color: #195319; font-size: 8pt;">Security Warnings
+      </tr>
+      <% unless @brakeman_warnings.blank? %>
+        <% @brakeman_warnings.each do |warning| %>
+          <tr><td><%= warning[0] %></td><td><%= warning[1] %></td></tr>
+        <% end %>
+      <% else %>
+        <tr><td>No Security Warnings</td></tr>
+      <% end %>
+    </table>
+    <p></p>
 
-    <table class="headings" width="100%" border="1%">
+    <table class="headings" align="left" bgcolor="white" style="width:70%; font-size: 5pt;" border="2px">
       <tr>
         <th><h3>Security Warnings</h3></th>
         <th ><h3>Rails Best Practise</h3></th>
@@ -97,134 +212,26 @@
         </th>
       </tr>
     </table>
-    <p>&nbsp;</p>
 
-    <table align="left" bgcolor="white" style="width:25%; font-size: 5pt;float: left;" border="2px">
-      <tr bgcolor="#A5FF88">
-        <td colspan="2"><h3 align="center" style="color: #195319; font-size: 8pt;">Security Warnings
+<table  align="center" border="1px" style="width: 100%; margin-top: 200px">
+    <tr bgcolor="#A5FF88">
+        <th align="center" style="color: #195319; font-size: 14pt;">HIstory</th>
       </tr>
-      <% unless @brakeman_warnings.blank? %>
-        <% @brakeman_warnings.each do |warning| %>
-          <tr><td><%= warning[0] %></td><td><%= warning[1] %></td></tr>
-        <% end %>
-      <% else %>
-        <tr><td>No Security Warnings</td></tr>
-      <% end %>
-    </table>
-    <p></p>
-    
-    <table  border="1px" style="width: 70%; float: right;">
-      <tr bgcolor="#A5FF88">
-        <td colspan="2"><h2 align="center" style="font-size: 12pt"> History</h2>
-      </tr>
-      <% unless @previous_reports.blank? %>        
-        <tr>
-          <th bgcolor="white"><h3>flog</h3>
-          <canvas id="flog" width="250" height="150" align="center"></canvas>
-          </th>
-          <th bgcolor="white">
-          <h3>best_practise</h3>
-          <canvas id="best_practise" width="250" height="150" align="center"></canvas>
-          </th>
-        </tr>
-        <tr>
-          <th bgcolor="white">
-          <h3>stats</h3>
-          <canvas id="stats" width="250" height="150" align="center"></canvas>
-          </th>
-          <th bgcolor="white">
-          <h3>security_warnings</h3>
-          <canvas id="security_warnings" width="250" height="150" align="center"></canvas>
-          </th>
-        </tr>
-       
+      <tr>
+      <% unless @previous_reports.blank? %>  
+    <tr>
+     <th><div id="Linegraph2" style=" height: 200px"></div></th>
+    <tr><th> <div id="Linegraph3" style=" height: 200px"></div></th></tr>
+      <tr>
+      <th><div id="Linegraph" style="height: 200px"></div></th></tr>
+      <tr><th><div id="Linegraph1" style="height: 200px"></div></th></tr>
+        <!-- tr bgcolor="#A5FF88">
+          <td colspan="2" align="center" style="font-size: 9pt;"><%#= "Generated on #{Time.now}" %></td>
+        </tr> -->
         <% else %>
-          <tr>
-            <td colspan="2">No commits with Qmeter yet.</td>
-          </tr>
+          <tr>No commits with Qmeter yet</tr>
         <% end %>
-      </table>
-
-    <%= javascript_include_tag 'jquery-v1.11.2' %>
-    <%= javascript_include_tag 'qmeter' %>
-    <script type="text/javascript">
-      // Custom JS
-      // Get previous report data
-      var data = <%= raw @previous_reports.to_json %>;
-
-      // Transpose array
-      var newArray = data[0].map(function(col, i) { 
-        return data.map(function(row) { 
-          return row[i] 
-        })
-      });
-
-
-      // Get time intervals
-      time = newArray[newArray.length-1]
-      
-      // Get data of each modules
-      arr_flog = newArray[newArray.length-5]
-      arr_stats = newArray[newArray.length-4]
-      arr_best_practise = newArray[newArray.length-3]
-      arr_security_warnings = newArray[newArray.length-2]
-
-      // Parse flog & stats data into float
-      for( var i = 0, len = arr_flog.length; i < len; i++ ) {
-        arr_flog[i] = parseFloat( arr_flog[i] );
-      }
-      for( var i = 0, len = arr_stats.length; i < len; i++ ) {
-        arr_stats[i] = parseFloat( arr_stats[i] );
-      }
-      for( var i = 0, len = arr_best_practise.length; i < len; i++ ) {
-        arr_best_practise[i] = parseInt( arr_best_practise[i] );
-      }
-      for( var i = 0, len = arr_security_warnings.length; i < len; i++ ) {
-        arr_security_warnings[i] = parseInt( arr_security_warnings[i] );
-      }
-
-      // create charts
-      $( document ).ready(function() {
-        var flog = {
-          node: "flog",
-          dataset: arr_flog,
-          labels: time,
-          pathcolor: "#288ed4",
-          fillcolor: "#8e8e8e",
-          ybreakperiod: 2,
-        };
-        drawlineChart(flog);
-
-        var stats = {
-          node: "stats",
-          dataset: arr_stats,
-          labels: time,
-          pathcolor: "#FF9933",
-          fillcolor: "#FF9933",
-          ybreakperiod: 0.5,
-        };
-        drawlineChart(stats);
-
-        var best_practise = {
-          node: "best_practise",
-          dataset: arr_best_practise,
-          labels: time,
-          pathcolor: "#8A008A",
-          fillcolor: "#8A008A",
-          ybreakperiod: 10
-        };
-        drawlineChart(best_practise);
-
-        var security_warnings = {
-          node: "security_warnings",
-          dataset: arr_security_warnings,
-          labels: time,
-          pathcolor: "#FF0000",
-          fillcolor: "#FF0000",
-          ybreakperiod: 3
-        };
-        drawlineChart(security_warnings);
-      });
-    </script>
-  </body>
+      </table>  <!--  -->
+<body>
 </html>
+

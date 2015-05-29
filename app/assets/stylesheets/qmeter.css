@@ -49,7 +49,8 @@ height:0;
         margin: auto;
       }
       th {
-       
+         /*background-color: #980905;*/
+         /*border-bottom: 5px solid #530200;*/
          color: #003D00;
          font-size: 8pt;
          padding: 1px 8px 1px 8px;
@@ -82,7 +83,7 @@ height:0;
         width: 20%;
        }
 
-       .headings tr:first-child th {
+       .headings {
         background-color:  #A5FF88;
         padding-top: 10px;
        }
@@ -95,14 +96,14 @@ height:0;
       }
 
       .content {
-        width: 80px;
-        height: 80px;
+        width: 70px;
+        height: 70px;
         border-radius: 50%;
         background-color: white;
         position: absolute;
-        top: 20px;
-        left: 20px;
-        line-height: 80px;
+        top: 15px;
+        left: 15px;
+        line-height: 65px;
         font-family: arial, sans-serif;
         font-size: 25px;
         text-align: center;
@@ -135,9 +136,9 @@ height:0;
       }
 
       .pie {
-          width:120px;
-          height:120px;
-          left: 50px;
+          width:100px;
+          height:100px;
+          left: 35px;
           margin-top: 10px;
           -moz-border-radius:100px;
           -webkit-border-radius:100px;
@@ -157,3 +158,45 @@ height:0;
       margin-top: 6px;
       margin-bottom: 20px;
     }
+ .SimpleChart {
+            position: relative;
+        }
+
+            .SimpleChart #tip {
+                background-color: #f0f0f0;
+                border: 1px solid #d0d0d0;
+                position: absolute;
+                left: -200px;
+                top: 30px;
+            }
+
+        .down-triangle {
+            width: 0;
+            height: 0;
+            border-top: 10px solid #d0d0d0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            position: absolute;
+            left: -200px;
+        }
+
+
+        .SimpleChart #highlighter {
+            position: absolute;
+            left: -200px;
+        }
+
+        .-simple-chart-holder {
+            float: left;
+            position: relative;
+            width: 100%;
+            background-color: #fff;
+            border: 1px solid #cecece;
+            /*padding: 6px;*/
+        }
+
+        /******Starts::Horizontal Alignment of Legends******/
+        .simple-chart-Header {
+            position: absolute;
+            font-size: 16px;
+        }
