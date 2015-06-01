@@ -2,23 +2,23 @@ require 'erb'
 require 'terminal-table'
 
 namespace :qmeter do
-  desc "Run Qmeter"
+  desc "Run brakeman and metric_fu to generate report of code"
 
-  task :report do
+  ### @arvind: This will run command to generate brakeman and matric fu report ###
+  task :generate_report do
     puts "*** run brakeman ***"
-     system("current_dir=$(pwd)")
-
-
+    system("current_dir=$(pwd)")
     system "brakeman -o report.html -o report.json"
 
     puts "*** run metric_fu ***"
-
-    system "sudo metric_fu --out $current_dir/public/metric_fu"
-
-
+    system "metric_fu --out $current_dir/tmp/metric_fu"
   end
 
+  ### *** ###
   task :run do
+    ### @arvind: This always executes the task, but it doesn't execute its dependencies
+    Rake::Task["qmeter:generate_report"].execute
+    ### *** ###
     extend Qmeter
     self.generate_final_report
     puts "======= Saving Current Analysis Details ======="
