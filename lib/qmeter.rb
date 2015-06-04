@@ -18,16 +18,14 @@ module Qmeter
     @stats_ratio_min = thresholds['stats_ratio_min']
     @stats_ratio_max = thresholds['stats_ratio_max']
   end
-def collect_brakeman_details
+  def collect_brakeman_details
     # Breakman source file
-
     file = check_and_assign_file_path('report.json')
     if  file.present?
-
       data_hash = JSON.parse(file)
-      if data_hash.present? && data_hash.has_key('warnings')
-        ### @arvind: FIXME what if hash does not have field warning
-        warning_type = data_hash['warnings'].map {|a| a = a['warning_type']}
+      ### @arvind: change array to hash and check it contain warnings or not
+      if data_hash.present? && data_hash[0].has_key?('warnings')
+        warning_type = data_hash['warnings'].map {|a| a = a['warning_type'] if a.has_key? 'warning_type'}
         @brakeman_warnings = Hash.new(0)
         warning_type.each do |v|
           @brakeman_warnings[v] += 1
