@@ -9,7 +9,7 @@ Also Qmeter has a provision to save report data into CSV and based on the previo
 Add below line to your Gemfile:
 
 ```
-gem 'qmeter', :git => 'git://github.com/rohit-clarion/qmeter.git', :group => :development
+gem 'qmeter', :git => 'git://github.com/arvind-clarion/qmeter.git', :group => :development
 ```
 
 Runtime dependancies
@@ -33,11 +33,7 @@ Run Qmeter
 Add below commands into '.git/hook/post-commit' file to save current quality status.
 
 ```
-	current_dir=$(pwd)
-
-	brakeman -o report.html -o report.json
-	metric_fu --out $current_dir/public/metric_fu
-
+	
 	rake qmeter:run
 ```
 Then you’ll have to give it execute permission
