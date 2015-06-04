@@ -3,25 +3,25 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Qmeter Report</title>
-    <%= stylesheet_link_tag 'qmeter' %>
-    <%= javascript_include_tag 'jquery-v1.11.2' %>
-    <%= javascript_include_tag 'qmeter' %>
+    <%= stylesheet_link_tag 'qmeter/qmeter' %>
+    <%= javascript_include_tag 'qmeter/jquery-v1.11.2' %>
+    <%= javascript_include_tag 'qmeterqmeter' %>
     <script type="text/javascript">
       // Custom JS
       // Get previous report data
       var data = <%= raw @previous_reports.to_json %>;
 
       // Transpose array
-      var newArray = data[0].map(function(col, i) { 
-        return data.map(function(row) { 
-          return row[i] 
+      var newArray = data[0].map(function(col, i) {
+        return data.map(function(row) {
+          return row[i]
         })
       });
 
 
       // Get time intervals
       time = newArray[newArray.length-1]
-      
+
       // Get data of each modules
       arr_flog = newArray[newArray.length-5]
       arr_stats = newArray[newArray.length-4]
@@ -53,7 +53,7 @@
 
         var graphdata2 = {
             linecolor: "Random",
-            values: arr_stats_hash             
+            values: arr_stats_hash
              };
 
         var graphdata3 = {
@@ -66,7 +66,7 @@
             title: 'rails practise',
             values: arr_best_practise_hash
         };
-        
+
         $(function () {
             $("#Linegraph").SimpleChart({
                 toolwidth: "150",
@@ -218,7 +218,7 @@
         <th align="center" style="color: #195319; font-size: 14pt;">HIstory</th>
       </tr>
       <tr>
-      <% unless @previous_reports.blank? %>  
+      <% unless @previous_reports.blank? %>
     <tr>
      <th><div id="Linegraph2" style=" height: 200px"></div></th>
     <tr><th> <div id="Linegraph3" style=" height: 200px"></div></th></tr>
