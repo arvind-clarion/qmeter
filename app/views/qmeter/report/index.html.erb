@@ -5,7 +5,7 @@
     <title>Qmeter Report</title>
     <%= stylesheet_link_tag 'qmeter/qmeter' %>
     <%= javascript_include_tag 'qmeter/jquery-v1.11.2' %>
-    <%= javascript_include_tag 'qmeterqmeter' %>
+    <%= javascript_include_tag 'qmeter/qmeter' %>
     <script type="text/javascript">
       // Custom JS
       // Get previous report data
@@ -105,8 +105,7 @@
             });
         });
     </script>
-
-    </head>
+  </head>
   <body>
     <h2 class="tophead"> Q-meter Dashboard</h2>
     <hr/>
@@ -213,23 +212,25 @@
       </tr>
     </table>
 
-<table  align="center" border="1px" style="width: 100%; margin-top: 200px">
-    <tr bgcolor="#A5FF88">
+    <table  align="center" border="1px" style="width: 100%; margin-top: 200px">
+      <tr bgcolor="#A5FF88">
         <th align="center" style="color: #195319; font-size: 14pt;">HIstory</th>
       </tr>
       <tr>
-      <% unless @previous_reports.blank? %>
-    <tr>
-     <th><div id="Linegraph2" style=" height: 200px"></div></th>
-    <tr><th> <div id="Linegraph3" style=" height: 200px"></div></th></tr>
-      <tr>
-      <th><div id="Linegraph" style="height: 200px"></div></th></tr>
-      <tr><th><div id="Linegraph1" style="height: 200px"></div></th></tr>
-        <!-- tr bgcolor="#A5FF88">
+        <% unless @previous_reports.blank? %>
+          <tr>
+            <th><div id="Linegraph2" style=" height: 200px"></div></th>
+            <tr><th> <div id="Linegraph3" style=" height: 200px"></div></th>
+          </tr>
+          <tr>
+            <th><div id="Linegraph" style="height: 200px"></div></th>
+          </tr>
+          <tr><th><div id="Linegraph1" style="height: 200px"></div></th></tr>
+          <!-- tr bgcolor="#A5FF88">
           <td colspan="2" align="center" style="font-size: 9pt;"><%#= "Generated on #{Time.now}" %></td>
         </tr> -->
         <% else %>
-          <tr>No commits with Qmeter yet</tr>
+          <div class='git-commit'>No commits with Qmeter yet</div>
         <% end %>
       </table>  <!--  -->
 <body>
