@@ -25,12 +25,19 @@ module Qmeter
       data_hash = JSON.parse(file)
       ### @arvind: change array to hash and check it contain warnings or not
       if data_hash.present? && data_hash[0].has_key?('warnings')
-        warning_type = data_hash['warnings'].map {|a| a = a['warning_type'] if a.has_key? 'warning_type'}
+        warning_type = data_hash['warnings'].map {|a| a = a['warning_type'] }
         @brakeman_warnings = Hash.new(0)
         warning_type.each do |v|
           @brakeman_warnings[v] += 1
         end
         @warnings_count = data_hash['warnings'].count
+      elsif data_hash[0].has_key?('warning_type')
+        @brakeman_warnings = Hash.new(0)
+        warning_type = data_hash[0]['warning_type']
+        @warnings_count = 1
+        [warning_type].each do |v|
+          @brakeman_warnings[v] += 1
+        end
       end
     end
   end
