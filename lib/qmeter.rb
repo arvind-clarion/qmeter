@@ -24,7 +24,8 @@ module Qmeter
     if  file.present?
       data_hash = JSON.parse(file)
       ### @arvind: change array to hash and check it contain warnings or not
-      if data_hash.present? && data_hash[0].has_key?('warnings')
+
+      if data_hash.present? && data_hash.class == Hash ? data_hash.has_key?('warnings') : data_hash[0].has_key?('warnings')
         warning_type = data_hash['warnings'].map {|a| a = a['warning_type'] }
         @brakeman_warnings = Hash.new(0)
         warning_type.each do |v|
@@ -74,19 +75,16 @@ module Qmeter
     ### Hide this because we are not using this currently
     #flag = false
     #flag = File.file?("#{Rails.root}/qmeter.csv")
-    file = check_and_assign_file_path('qmeter.csv')
-    if file
-      CSV.open("#{Rails.root}/qmeter.csv", "a") do |csv|
-        #csv << ['flog','stats','rails_best_practices','warnings', 'timestamp'] if flag == false
-        sha = `git rev-parse HEAD`
-        csv << [@flog_average_complexity, @stats_code_to_test_ratio, @rails_best_practices_total, @warnings_count, sha]
-      end
+    CSV.open("#{Rails.root}/qmeter.csv", "a") do |csv|
+      #csv << ['flog','stats','rails_best_practices','warnings', 'timestamp'] if flag == false
+      sha = `git rev-parse HEAD`
+      csv << [@flog_average_complexity, @stats_code_to_test_ratio, @rails_best_practices_total, @warnings_count, sha]
     end
   end
 
   def get_previour_result
     # Get previous report data
-    @previous_reports = CSV.read("#{Rails.root}/qmeter.csv").last(4) if check_and_assign_file_path("qmeter.csv")
+    @previous_reports = CSV.read("#{Rails.root}/qmeter.csv").last(4) if File.file?("#{Rails.root}/qmeter.csv")
   end
 
   def choose_color
