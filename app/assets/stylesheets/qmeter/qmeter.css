@@ -41,6 +41,13 @@ clear:both;
 height:0;
 }
 
+/*qmeter git commit message*/
+div.git-commit {
+  margin-top: 19%;
+  margin-bottom: -14%;
+}
+/*-----------*/
+
 /* CSS style used for HTML reports */
       body {
         font-family: sans-serif;
@@ -152,7 +159,7 @@ height:0;
         h2.tophead {
    margin: 0;
    color: green;
-   
+
     }
     hr{
       margin-top: 6px;
