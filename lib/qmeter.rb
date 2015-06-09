@@ -18,48 +18,52 @@ module Qmeter
     @stats_ratio_min = thresholds['stats_ratio_min']
     @stats_ratio_max = thresholds['stats_ratio_max']
   end
+
   def collect_brakeman_details
     # Breakman source file
     file = check_and_assign_file_path('report.json')
-    if  file.present?
+    if file
       data_hash = JSON.parse(file)
       ### @arvind: change array to hash and check it contain warnings or not
-
       if data_hash.present? && data_hash.class == Hash ? data_hash.has_key?('warnings') : data_hash[0].has_key?('warnings')
         warning_type = data_hash['warnings'].map {|a| a = a['warning_type'] }
-        @brakeman_warnings = Hash.new(0)
-        warning_type.each do |v|
-          @brakeman_warnings[v] += 1
-        end
-        @warnings_count = data_hash['warnings'].count
+        assign_warnings(warning_type, data_hash['warnings'].count)
       elsif data_hash[0].has_key?('warning_type')
-        @brakeman_warnings = Hash.new(0)
-        warning_type = data_hash[0]['warning_type']
-        @warnings_count = 1
-        [warning_type].each do |v|
-          @brakeman_warnings[v] += 1
-        end
+        assign_warnings([data_hash[0]['warning_type']])
       end
+    end
+  end
+
+  ### @arvind: Assign warnings to @breakeman_warnings ###
+  def assign_warnings(warning_type, warnings_count=1)
+    @brakeman_warnings = Hash.new(0)
+    # warning_type = data_hash[0]['warning_type']
+    @warnings_count = warnings_count
+    warning_type.each do |v|
+      @brakeman_warnings[v] += 1
     end
   end
 
   def collect_metric_fu_details
   # parsing metric_fu report from .yml file
     file = check_and_assign_file_path('tmp/metric_fu/report.yml')
-    if file.present?
+    if file
       @surveys  = YAML.load(ERB.new(file).result)
       @surveys.each do |survey|
-        unless survey.blank?
-          case survey[0]
-            when :flog
-              @flog_average_complexity = survey[1][:average].round(1)
-            when :stats
-              @stats_code_to_test_ratio = survey[1][:code_to_test_ratio]
-            when :rails_best_practices
-              @rails_best_practices_total = survey[1][:total].first.gsub(/[^\d]/, '').to_i
-          end
-        end
+        assign_status(survey) if survey.present?
       end
+    end
+  end
+
+  ### @arvind: assing ration ,complexity and bestpractice of code ###
+  def assign_status(survey)
+    case survey[0]
+      when :flog
+        @flog_average_complexity = survey[1][:average].round(1)
+      when :stats
+        @stats_code_to_test_ratio = survey[1][:code_to_test_ratio]
+      when :rails_best_practices
+        @rails_best_practices_total = survey[1][:total].first.gsub(/[^\d]/, '').to_i
     end
   end
 

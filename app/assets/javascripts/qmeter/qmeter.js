@@ -36,20 +36,20 @@
             var that = this,
            config = that.options;
             var graph = $(that.element).addClass("SimpleChart").addClass(config.ChartType).append("<canvas class='SimpleChartcanvas'></canvas>").find('canvas').css({
-                float: (config.legendposition == 'right' || config.legendposition == 'left') ? 'left' : '',
+                float: (config.legendposition === 'right' || config.legendposition === 'left') ? 'left' : '',
                 'margin-top': config.topmargin,
                 'margin-right': config.rightmargin
             });
             var ctx = graph[0].getContext("2d");
-            graph[0].width = $(that.element).width() - (config.showlegends ? ((config.legendposition == 'right' || config.legendposition == 'left') ? parseInt(config.legendsize) + parseInt(config.xPadding) : 0) : 0) - config.rightmargin;
-            graph[0].height = $(that.element).height() - (config.showlegends ? ((config.legendposition == 'bottom' || config.legendposition == 'top') ? config.legendsize : 0) : 0) - config.topmargin;
+            graph[0].width = $(that.element).width() - (config.showlegends ? ((config.legendposition === 'right' || config.legendposition === 'left') ? parseInt(config.legendsize) + parseInt(config.xPadding) : 0) : 0) - config.rightmargin;
+            graph[0].height = $(that.element).height() - (config.showlegends ? ((config.legendposition === 'bottom' || config.legendposition === 'top') ? config.legendsize : 0) : 0) - config.topmargin;
             var c = graph[0].getContext('2d');
             switch (config.ChartType) {
                 case "Line":
                     that.drawAxis(c, graph);
                     that.drawLineAreaScatteredHybridCharts(c, graph);
                     break;
-                
+
             }
 
             //show legend
@@ -288,7 +288,7 @@
             });
 
             for (var i = 0; i < config.data.length; i++) {
-                c.strokeStyle = config.data[i].linecolor == "Random" ? config.data[i].Randomlinecolor = that.getRandomColor() : config.data[i].linecolor;
+                c.strokeStyle = config.data[i].linecolor === "Random" ? config.data[i].Randomlinecolor = that.getRandomColor() : config.data[i].linecolor;
                 c.beginPath();
                 c.moveTo(that.pixelX(0, i), that.pixelY(config.data[i].values[0].Y));
                 if (config.ChartType !== "Scattered" && config.ChartType !== "Hybrid") {
@@ -297,14 +297,14 @@
                     }
                     c.stroke();
                 }
-                c.fillStyle = config.data[i].linecolor == "Random" ? config.data[i].Randomlinecolor : config.data[i].linecolor;
-                if (config.ChartType == "Area") {
+                c.fillStyle = config.data[i].linecolor === "Random" ? config.data[i].Randomlinecolor : config.data[i].linecolor;
+                if (config.ChartType === "Area") {
                     c.lineTo(that.pixelX(config.data[i].values.length - 1, i), that.pixelY(0));
                     c.lineTo(that.pixelX(0, 0), that.pixelY(0));
                     c.stroke();
                     c.fill();
                 }
-                if (config.ChartType == "Line" || config.ChartType == "Scattered" || config.ChartType == "StackedHybrid") {
+                if (config.ChartType === "Line" || config.ChartType === "Scattered" || config.ChartType === "StackedHybrid") {
                     for (var j = 0; j < config.data[i].values.length; j++) {
                         c.beginPath();
                         c.arc(that.pixelX(j, i), that.pixelY(config.data[i].values[j].Y), 4, 0, Math.PI * 2, true);
@@ -322,7 +322,7 @@
                         r: 4,
                         rXr: 16,
                         tip: config.data[i].values[j].X,
-                        color: config.data[i].linecolor == "Random" ? config.data[i].Randomlinecolor : config.data[i].linecolor
+                        color: config.data[i].linecolor === "Random" ? config.data[i].Randomlinecolor : config.data[i].linecolor
                     });
                 }
             }
@@ -342,7 +342,7 @@
                         tipCtx.fillText(dot.tip, 5, 15);
                         tipbaloontip[0].style.left = (dot.x) - 7 + "px";
                         tipbaloontip[0].style.top = (dot.y + config.topmargin) - 19 + "px";
-                        if (config.ChartType == "Line" || config.ChartType == "Scattered" || config.ChartType == "Hybrid" || config.ChartType == "StackedHybrid") {
+                        if (config.ChartType === "Line" || config.ChartType === "Scattered" || config.ChartType === "Hybrid" || config.ChartType === "StackedHybrid") {
                             highlighter[0].style.left = (dot.x) - 9 + "px";
                             highlighter[0].style.top = (dot.y + config.topmargin) - 9 + "px";
                         }
@@ -365,41 +365,41 @@
         drawLegends: function (graph) {
             var that = this,
             config = this.options;
-            if (config.ChartType == "Line" || config.ChartType == "Area" || config.ChartType == "Scattered" || config.ChartType == "Stacked" || config.ChartType == "StackedHybrid") {
+            if (config.ChartType === "Line" || config.ChartType === "Area" || config.ChartType === "Scattered" || config.ChartType === "Stacked" || config.ChartType === "StackedHybrid") {
                 var _legends = $("<div class='simple-chart-legends' />", { id: "legendsdiv" }).css({
-                    width: (config.legendposition == 'right' || config.legendposition == 'left') ? (config.legendsize - 5) : graph.width(),
-                    height: (config.legendposition == 'top' || config.legendposition == 'bottom') ? (config.legendsize - 5) : graph.height(),
-                    float: (config.legendposition == 'right' || config.legendposition == 'left') ? 'left' : ''
+                    width: (config.legendposition === 'right' || config.legendposition === 'left') ? (config.legendsize - 5) : graph.width(),
+                    height: (config.legendposition === 'top' || config.legendposition === 'bottom') ? (config.legendsize - 5) : graph.height(),
+                    float: (config.legendposition === 'right' || config.legendposition === 'left') ? 'left' : ''
                 }).appendTo($(that.element));
                 var _ul = $(_legends).append("<span>" + config.LegendTitle + "</span>").append("<ul />").find("ul")
                 for (var i = 0; i < config.data.length; i++) {
                     $("<li />", { class: "legendsli" }).append("<span />").find('span').addClass("legendindicator").append('<span class="line" style="background: ' + (config.data[i].linecolor == "Random" ? config.data[i].Randomlinecolor : config.data[i].linecolor) + '"></span><span class="circle" style="background: ' + (config.data[i].linecolor == "Random" ? config.data[i].Randomlinecolor : config.data[i].linecolor) + '"></span>').parent().append("<span>" + config.data[i].title + "</span>").appendTo(_ul);
                 }
-                if (config.legendposition == 'top' || config.legendposition == 'left') {
+                if (config.legendposition === 'top' || config.legendposition === 'left') {
                     $(_legends).insertBefore($(that.element).find('.SimpleChartcanvas'));
                 }
-                if (config.legendposition == 'right' || config.legendposition == 'left') {
+                if (config.legendposition === 'right' || config.legendposition === 'left') {
                     $(_legends).addClass('vertical')
                 }
                 else {
                     $(_legends).addClass('horizontal');
                 }
             }
-            if (config.ChartType == "Bar" || config.ChartType == "Hybrid" || config.ChartType == "Pie") {
+            if (config.ChartType === "Bar" || config.ChartType === "Hybrid" || config.ChartType === "Pie") {
                 var _legends = $("<div class='simple-chart-legends' />", { id: "legendsdiv" }).css({
-                    width: (config.legendposition == 'right' || config.legendposition == 'left') ? (config.legendsize - 5) : graph.width(),
-                    height: (config.legendposition == 'top' || config.legendposition == 'bottom') ? (config.legendsize - 5) : graph.height(),
-                    float: (config.legendposition == 'right' || config.legendposition == 'left') ? 'left' : ''
+                    width: (config.legendposition === 'right' || config.legendposition === 'left') ? (config.legendsize - 5) : graph.width(),
+                    height: (config.legendposition === 'top' || config.legendposition === 'bottom') ? (config.legendsize - 5) : graph.height(),
+                    float: (config.legendposition === 'right' || config.legendposition === 'left') ? 'left' : ''
                 }).appendTo($(that.element));
                 var _ul = $(_legends).append("<span>" + config.LegendTitle + "</span>").append("<ul />").find("ul")
                 for (var i = 0; i < config.data[0].values.length; i++) {
 
                     $("<li />", { class: "legendsli" }).append("<span />").find('span').addClass("legendindicator").append('<span class="line" style="background: ' + (config.data[0].linecolor == "Random" ? config.data[0].values[i].color : config.data[0].linecolor) + '"></span><span class="circle" style="background: ' + (config.data[0].linecolor == "Random" ? config.data[0].values[i].color : config.data[0].linecolor) + '"></span>').parent().append("<span>" + config.data[0].values[i].X + "</span><span class='legendvalue'>" + (config.ChartType == 'Pie' ? config.data[0].values[i].Y : '') + "</span>").appendTo(_ul);
                 }
-                if (config.legendposition == 'top' || config.legendposition == 'left') {
+                if (config.legendposition === 'top' || config.legendposition === 'left') {
                     $(_legends).insertBefore($(that.element).find('.SimpleChartcanvas'));
                 }
-                if (config.legendposition == 'right' || config.legendposition == 'left') {
+                if (config.legendposition === 'right' || config.legendposition === 'left') {
                     $(_legends).addClass('vertical')
                 }
                 else {
