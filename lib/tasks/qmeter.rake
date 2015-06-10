@@ -3,6 +3,10 @@ require 'terminal-table'
 
 namespace :qmeter do
   desc "Run brakeman and metric_fu to generate report of code"
+  ######@sourabh: copy the jshint file from gem cogif to application config #######
+   source = File.join(Gem.loaded_specs["qmeter"].full_gem_path, "config", "jshint.yml")
+    target = File.join(Rails.root, "config", "jshint.yml")
+    FileUtils.cp_r source, target
 
   ### @arvind: This will run command to generate brakeman and matric fu report ###
   task :generate_report do
@@ -11,6 +15,9 @@ namespace :qmeter do
 
     puts "*** run metric_fu ***"
     system "metric_fu --out #{Rails.root}/public/metric_fu "
+
+    puts "-----JAVASCRIPT Erorrs----------"
+    system "jshint"
 
   end
 
