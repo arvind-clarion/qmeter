@@ -21,8 +21,32 @@ namespace :qmeter do
 
   end
 
+  task :add_command_in_post_commit do
+    ### @arvind:  Asked user to add rake command inside git post commit file , Task will run in each eommit
+    STDOUT.puts "Write Y to add rake qmeter:run command to 'post commit', it will run when you commit the code".yellow
+    input = STDIN.gets.strip
+    if input == 'y'
+      File.open('.git/hooks/post-commit', 'a') do |f|
+        f.puts "rake qmeter:run"
+      end
+      system "chmod +x .git/hooks/post-commit"
+    else
+      STDOUT.puts "You can add it in next time"
+    end
+  end
+
   ### *** ###
   task :run do
+    ### @arvind:  this will check git post commit has rake command or not
+    if File.file?('.git/hooks/post-commit')
+      file =  File.read(".git/hooks/post-commit").include?('rake qmeter:run')
+      if !file =  File.read(".git/hooks/post-commit").include?('rake qmeter:run')
+        Rake::Task["qmeter:add_command_in_post_commit"].execute
+      end
+    else
+      Rake::Task["qmeter:add_command_in_post_commit"].execute
+    end
+
     ### @arvind: This always executes the task, but it doesn't execute its dependencies
     Rake::Task["qmeter:generate_report"].execute
     ### *** ###
