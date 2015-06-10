@@ -112,14 +112,6 @@
 
             c.fillStyle = config.textcolor;
 
-            // for (var i = 0; i < config.data.length; i++) {
-            //     for (var j = 0; j < config.data[i].values.length; j++) {
-            //         if (xelementarray.indexOf(config.data[i].values[j].X) < 0) {
-            //             xelementarray.push(config.data[i].values[j].X);
-            //             c.fillText(config.data[i].values[j].X, that.pixelX(j, i), graph.height() - config.yPadding + 20);
-            //         }
-            //     }
-            // }
             c.save();
             var fontArgs = c.font.split(' ');
             c.font = config.axisfontsize + ' ' + fontArgs[fontArgs.length - 1];
@@ -159,119 +151,7 @@
                 c.fill();
             }
         },
-        // drawPie: function (c, graph) {
-        //     var that = this,
-        //    config = this.options;
-        //     c.clearRect(0, 0, graph.width(), graph.height());
-        //     var totalVal = 0, lastend = 0;
-        //     for (var j = 0; j < config.data[0].values.length; j++) {
-        //         totalVal += (typeof config.data[0].values[j].Y == 'number') ? config.data[0].values[j].Y : 0;
-        //     }
-
-        //     for (var i = 0; i < config.data[0].values.length; i++) {
-        //         c.fillStyle = config.data[0].linecolor == "Random" ? config.data[0].values[i].color = randomcolor = that.getRandomColor() : config.data[0].linecolor;
-        //         c.beginPath();
-        //         var centerx = graph.width() / 2.2;
-        //         var centery = graph.height() / 2.2;
-        //         c.moveTo(centerx, centery);
-        //         c.arc(centerx, centery, (config.legendposition == 'right' || config.legendposition == 'left') ? centerx : centery, lastend, lastend +
-        //           (Math.PI * 2 * (config.data[0].values[i].Y / totalVal)), false);
-        //         c.lineTo(centerx, centery);
-        //         c.fill();
-        //         c.fillStyle = config.pielabelcolor;
-        //         c.lineWidth = config.pieborderWidth;
-        //         c.strokeStyle = config.pieborderColor;
-        //         c.stroke();
-
-        //         if (config.showpielables) {
-        //             c.save();
-        //             c.translate(centerx, centery);
-        //             c.rotate(lastend - 0.20 +
-        //               (Math.PI * 2 * (config.data[0].values[i].Y / totalVal)));
-        //             var dx = Math.floor(centerx * 0.5) + 40;
-        //             var dy = Math.floor(centery * 0.05);
-        //             c.textAlign = "right";
-        //             var fontArgs = c.font.split(' ');
-        //             c.font = config.piefontsize + ' ' + fontArgs[fontArgs.length - 1];
-        //             c.fillText(config.data[0].values[i].X, dx, dy);
-        //             c.restore();
-
-        //             c.save();
-        //             c.fillStyle = config.pielabelpercentcolor;
-        //             c.translate(centerx, centery);
-        //             c.rotate(lastend - 0.15 +
-        //               (Math.PI * 2 * (config.data[0].values[i].Y / totalVal)));
-        //             var dx = Math.floor(centerx * 0.5) + 90;
-        //             var dy = Math.floor(centery * 0.05);
-        //             c.textAlign = "right";
-        //             var fontArgs = c.font.split(' ');
-        //             c.font = config.piefontsize + ' ' + fontArgs[fontArgs.length - 1];
-        //             c.fillText(Math.round((config.data[0].values[i].Y / totalVal) * 100) + "%", dx, dy);
-        //             c.restore();
-        //         }
-        //         lastend += Math.PI * 2 * (config.data[0].values[i].Y / totalVal);
-        //     }
-        //     var canvasOffset = $(graph).offset();
-        //     var offsetX = canvasOffset.left;
-        //     var offsetY = canvasOffset.top;
-
-        // },
-        // drawBar: function (c, graph) {
-        //     var that = this,
-        //     config = this.options;
-        //     for (var i = 0; i < config.data[0].values.length; i++) {
-        //         var randomcolor;
-        //         c.strokeStyle = config.data[0].linecolor == "Random" ? config.data[0].values[i].color = randomcolor = that.getRandomColor() : config.data[0].linecolor;
-        //         c.fillStyle = config.data[0].linecolor == "Random" ? randomcolor : config.data[0].linecolor;
-        //         c.beginPath();
-        //         c.rect(that.pixelX(i, 0) - config.yPadding / 4, that.pixelY(config.data[0].values[i].Y), config.yPadding / 2, graph.height() - that.pixelY(config.data[0].values[i].Y) - config.xPadding + 8);
-        //         c.closePath();
-        //         c.stroke();
-        //         c.fill();
-        //         c.textAlign = "left";
-        //         c.fillStyle = "#000";
-        //         c.fillText(config.data[0].values[i].Y, that.pixelX(i, 0) - config.yPadding / 4, that.pixelY(config.data[0].values[i].Y) + 7, 200);
-        //     }
-        // },
-
-        // drawStacked: function (c, graph) {
-        //     var that = this,
-        //     config = this.options;
-        //     for (var i = 0; i < config.data.length; i++) {
-        //         for (var j = 0; j < config.data[i].values.length; j++) {
-        //             var randomcolor;
-        //             c.strokeStyle = config.data[i].linecolor == "Random" ? config.data[i].values[j].color = randomcolor = that.getRandomColor() : config.data[i].linecolor;
-        //             c.fillStyle = config.data[i].linecolor == "Random" ? randomcolor : config.data[i].linecolor;
-        //             c.beginPath();
-        //             c.rect(that.pixelX(j, 0) - config.yPadding / 4, that.pixelY(config.data[i].values[j].Y), config.yPadding / 2, graph.height() - that.pixelY(config.data[i].values[j].Y) - config.xPadding + 8);
-        //             c.closePath();
-        //             c.stroke();
-        //             c.fill();
-        //             c.textAlign = "left";
-        //             c.fillStyle = "#000";
-        //             c.fillText(config.data[i].values[j].Y, that.pixelX(j, 0) - config.yPadding / 4, that.pixelY(config.data[i].values[j].Y) + 7, 200);
-        //         }
-        //     }
-        // },
-
-        // drawHybrid: function (c, graph) {
-        //     var that = this,
-        //     config = this.options;
-        //     var randomcolor;
-        //     c.strokeStyle = config.data[0].linecolor == "Random" ? randomcolor = that.getRandomColor() : config.data[0].linecolor;
-        //     c.beginPath();
-        //     c.moveTo(that.pixelX(0, 0), that.pixelY(config.data[0].values[0].Y));
-        //     for (var j = 1; j < config.data[0].values.length; j++) {
-        //         c.lineTo(that.pixelX(j, 0), that.pixelY(config.data[0].values[j].Y));
-        //     }
-        //     c.stroke();
-        //     c.fillStyle = config.data[0].linecolor == "Random" ? randomcolor : config.data[0].linecolor;
-        //     for (var j = 0; j < config.data[0].values.length; j++) {
-        //         c.beginPath();
-        //         c.arc(that.pixelX(j, 0), that.pixelY(config.data[0].values[j].Y), 4, 0, Math.PI * 2, true);
-        //         c.fill();
-        //     }
-        // },
+        
         drawLineAreaScatteredHybridCharts: function (c, graph) {
             var that = this,
             config = this.options;
