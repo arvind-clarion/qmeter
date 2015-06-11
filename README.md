@@ -10,6 +10,9 @@ Add below line to your Gemfile:
 
 ```
 gem 'qmeter', :git => 'git://github.com/arvind-clarion/qmeter.git', :group => :development
+                    or 
+gem 'qmeter', :git => 'git://github.com/arvind-clarion/qmeter.git', tag: 'v1.0'
+
 ```
 
 Runtime dependancies
@@ -35,11 +38,6 @@ Add below commands into '.git/hook/post-commit' file to save current quality sta
 ```
 	
 	rake qmeter:run
-```
-Then you’ll have to give it execute permission
-
-```
-    $ chmod +x .git/hooks/post-commit
 ```
 
 It's ready to perform now. On every git commit it will check the code quality and saves the result.
