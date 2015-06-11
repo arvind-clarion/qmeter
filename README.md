@@ -32,12 +32,8 @@ And then execute:
 ## Usage
 
 Run Qmeter
-
-Add below commands into '.git/hook/post-commit' file to save current quality status.
-
 ```
-	
-	rake qmeter:run
+ rake qmeter:run
 ```
 
 It's ready to perform now. On every git commit it will check the code quality and saves the result.
