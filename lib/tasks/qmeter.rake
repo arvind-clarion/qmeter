@@ -1,4 +1,5 @@
 require 'erb'
+require 'qmeter/string'
 require 'terminal-table'
 
 namespace :qmeter do
@@ -23,7 +24,7 @@ namespace :qmeter do
 
   task :add_command_in_post_commit do
     ### @arvind:  Asked user to add rake command inside git post commit file , Task will run in each eommit
-    STDOUT.puts "Write Y to add rake qmeter:run command to 'post commit', it will run when you commit the code".yellow
+    STDOUT.puts "Write Y to add rake qmeter:run command to 'post commit', it will run when you commit the code".reverse_color
     input = STDIN.gets.strip
     if input == 'y'
       File.open('.git/hooks/post-commit', 'a') do |f|
