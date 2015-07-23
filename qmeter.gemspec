@@ -26,6 +26,4 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "railties"
   spec.add_runtime_dependency "terminal-table"
   spec.add_runtime_dependency "jshint"
-
-  File.read('.gitignore').include?('qmeter.csv') ? "Already there" : (file = File.open('.gitignore', 'a'); file.puts("qmeter.csv"); file.close_write; "Added to .gitignore")
 end

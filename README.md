@@ -31,6 +31,11 @@ And then execute:
 
 ## Usage
 
+Ignore files and folders form .gitignore
+```
+ rake qmeter:gitignore
+```
+
 Run Qmeter
 ```
  rake qmeter:run

@@ -65,4 +65,17 @@ namespace :qmeter do
     puts table
     puts "======= Please visit localhost:3000/qmeter for detailed report ======="
   end
+
+  # This will append Files/Folders in .gitignore file
+  task :gitignore do
+    add_to_ignore("qmeter.csv")
+    add_to_ignore("report.json")
+    add_to_ignore("report.html")
+    add_to_ignore("public/metric_fu")
+  end
+
+  def add_to_ignore(file_folder)
+    resourse = file_folder.to_s
+    File.read('.gitignore').include?(resourse) ? "Already there" : (file = File.open('.gitignore', 'a'); file.puts(resourse); file.close_write; "Added to .gitignore")
+  end
 end
