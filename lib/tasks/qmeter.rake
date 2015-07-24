@@ -66,7 +66,7 @@ namespace :qmeter do
       puts table
       puts "======= Please visit localhost:3000/qmeter for detailed report ======="
     else
-      puts "======= Please Initialize git first ======="
+      puts "======= Please Initialize git first =======".bold.green.bg_red
     end
   end
 
