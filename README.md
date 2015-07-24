@@ -10,7 +10,7 @@ Add below line to your Gemfile:
 
 ```
 gem 'qmeter', :git => 'git://github.com/arvind-clarion/qmeter.git', :group => :development
-                    or 
+                    or
 gem 'qmeter', :git => 'git://github.com/arvind-clarion/qmeter.git', tag: 'v1.0'
 
 ```
@@ -36,9 +36,14 @@ Run Qmeter
  rake qmeter:run
 ```
 
+Ignore reports related files and folders form git
+```
+ rake qmeter:gitignore
+```
+
 It's ready to perform now. On every git commit it will check the code quality and saves the result.
 
-To get detailed analysis report visit '/qmeter' 
+To get detailed analysis report visit '/qmeter'
 
 ```
 localhost:3000/qmeter
