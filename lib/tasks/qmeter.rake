@@ -68,14 +68,19 @@ namespace :qmeter do
 
   # This will append Files/Folders in .gitignore file
   task :gitignore do
-    add_to_ignore("qmeter.csv")
-    add_to_ignore("report.json")
-    add_to_ignore("report.html")
-    add_to_ignore("public/metric_fu")
+    add_to_gitignore("qmeter.csv")
+    add_to_gitignore("report.json")
+    add_to_gitignore("report.html")
+    add_to_gitignore("public/metric_fu")
+    add_to_gitignore("config/jshint.yml")
   end
 
-  def add_to_ignore(file_folder)
-    resourse = file_folder.to_s
-    File.read('.gitignore').include?(resourse) ? "Already there" : (file = File.open('.gitignore', 'a'); file.puts(resourse); file.close_write; "Added to .gitignore")
+  def add_to_gitignore(file_folder)
+    resource = file_folder.to_s
+    unless File.read('.gitignore').include?(resource)
+      gitignore_file = File.open('.gitignore', 'a')
+      gitignore_file.puts(resource)
+      gitignore_file.close_write
+    end
   end
 end
