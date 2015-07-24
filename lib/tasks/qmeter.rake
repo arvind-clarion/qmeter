@@ -39,31 +39,35 @@ namespace :qmeter do
   ### *** ###
   task :run do
     ### @arvind:  this will check git post commit has rake command or not
-    if File.file?('.git/hooks/post-commit')
-      file =  File.read(".git/hooks/post-commit").include?('rake qmeter:run')
-      if !file =  File.read(".git/hooks/post-commit").include?('rake qmeter:run')
+    if File.directory?('.git') && File.exists?('.git/config')
+      if File.file?('.git/hooks/post-commit')
+        file =  File.read(".git/hooks/post-commit").include?('rake qmeter:run')
+        if !file =  File.read(".git/hooks/post-commit").include?('rake qmeter:run')
+          Rake::Task["qmeter:add_command_in_post_commit"].execute
+        end
+      else
         Rake::Task["qmeter:add_command_in_post_commit"].execute
       end
+
+      ### @arvind: This always executes the task, but it doesn't execute its dependencies
+      Rake::Task["qmeter:generate_report"].execute
+      ### *** ###
+      extend Qmeter
+      self.generate_final_report
+      puts "======= Saving Current Analysis Details ======="
+      self.save_report
+
+      rows = []
+      rows << ['Security Warning', @warnings_count]
+      rows << ['Flog', @flog_average_complexity]
+      rows << ['Stats', @stats_code_to_test_ratio]
+      rows << ['Rails Best Practices', @rails_best_practices_total]
+      table = Terminal::Table.new :title => "Qmeter Analysis", :headings => ['Type', 'Number'], :rows => rows, :style => {:width => 80}
+      puts table
+      puts "======= Please visit localhost:3000/qmeter for detailed report ======="
     else
-      Rake::Task["qmeter:add_command_in_post_commit"].execute
+      puts "======= Please Initialize git first =======".bold.green.bg_red
     end
-
-    ### @arvind: This always executes the task, but it doesn't execute its dependencies
-    Rake::Task["qmeter:generate_report"].execute
-    ### *** ###
-    extend Qmeter
-    self.generate_final_report
-    puts "======= Saving Current Analysis Details ======="
-    self.save_report
-
-    rows = []
-    rows << ['Security Warning', @warnings_count]
-    rows << ['Flog', @flog_average_complexity]
-    rows << ['Stats', @stats_code_to_test_ratio]
-    rows << ['Rails Best Practices', @rails_best_practices_total]
-    table = Terminal::Table.new :title => "Qmeter Analysis", :headings => ['Type', 'Number'], :rows => rows, :style => {:width => 80}
-    puts table
-    puts "======= Please visit localhost:3000/qmeter for detailed report ======="
   end
 
   # This will append Files/Folders in .gitignore file
