@@ -39,13 +39,17 @@ namespace :qmeter do
   ### *** ###
   task :run do
     ### @arvind:  this will check git post commit has rake command or not
-    if File.file?('.git/hooks/post-commit')
-      file =  File.read(".git/hooks/post-commit").include?('rake qmeter:run')
-      if !file =  File.read(".git/hooks/post-commit").include?('rake qmeter:run')
+    if File.directory?('.git') && File.exists?('.git/config')
+      if File.file?('.git/hooks/post-commit')
+        file =  File.read(".git/hooks/post-commit").include?('rake qmeter:run')
+        if !file =  File.read(".git/hooks/post-commit").include?('rake qmeter:run')
+          Rake::Task["qmeter:add_command_in_post_commit"].execute
+        end
+      else
         Rake::Task["qmeter:add_command_in_post_commit"].execute
       end
     else
-      Rake::Task["qmeter:add_command_in_post_commit"].execute
+      puts "Please Initialize git first"
     end
 
     ### @arvind: This always executes the task, but it doesn't execute its dependencies
