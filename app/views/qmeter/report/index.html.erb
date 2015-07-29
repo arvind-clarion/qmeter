@@ -6,112 +6,14 @@
     <%= stylesheet_link_tag 'qmeter/qmeter' %>
     <%= javascript_include_tag 'qmeter/jquery-v1.11.2' %>
     <%= javascript_include_tag 'qmeter/qmeter' %>
-    <script type="text/javascript">
-      // Custom JS
-      // Get previous report data
-      var data = <%= raw @previous_reports.to_json %>;
-
-      // Transpose array
-      var newArray = data[0].map(function(col, i) {
-        return data.map(function(row) {
-          return row[i]
-        })
-      });
-
-
-      // Get time intervals
-      time = newArray[newArray.length-1]
-
-      // Get data of each modules
-      arr_flog = newArray[newArray.length-5]
-      arr_stats = newArray[newArray.length-4]
-      arr_best_practise = newArray[newArray.length-3]
-      arr_security_warnings = newArray[newArray.length-2]
-
-      // Parse flog & stats data into float
-      arr_flog_hash = [];
-      for( var i = 0, len = arr_flog.length; i < len; i++ ) {
-        arr_flog_hash[i] = {X: time[i] , Y: parseFloat( arr_flog[i] ) };
-      }
-      arr_stats_hash = [];
-      for( var i = 0, len = arr_stats.length; i < len; i++ ) {
-        arr_stats_hash[i] = {X: time[i], Y: parseFloat( arr_stats[i] )};
-      }
-      arr_best_practise_hash = [];
-      for( var i = 0, len = arr_best_practise.length; i < len; i++ ) {
-        arr_best_practise_hash[i] ={X: time[i], Y: parseInt( arr_best_practise[i] )};
-      }
-      arr_security_warnings_hash = [];
-      for( var i = 0, len = arr_security_warnings.length; i < len; i++ ) {
-        arr_security_warnings_hash[i] ={X: time[i], Y: parseInt( arr_security_warnings[i] )};
-      }
-
-         var graphdata1 = {
-            linecolor: "Random",
-            values: arr_flog_hash
-                    };
-
-        var graphdata2 = {
-            linecolor: "Random",
-            values: arr_stats_hash
-             };
-
-        var graphdata3 = {
-            linecolor: "Random",
-            values: arr_security_warnings_hash
-        };
-
-        var graphdata4 = {
-            linecolor: "Random",
-            title: 'rails practise',
-            values: arr_best_practise_hash
-        };
-
-        $(function () {
-            $("#Linegraph").SimpleChart({
-                toolwidth: "150",
-                toolheight: "25",
-                axiscolor: "#E6E6E6",
-                textcolor: "#6E6E6E",
-                title: 'flog',
-                data: [graphdata1],
-            });
-
-            $("#Linegraph1").SimpleChart({
-                toolwidth: "150",
-                toolheight: "25",
-                axiscolor: "#E6E6E6",
-                textcolor: "#6E6E6E",
-                title: 'stats',
-                data: [graphdata2],
-            });
-
-            $("#Linegraph2").SimpleChart({
-                toolwidth: "150",
-                toolheight: "25",
-                axiscolor: "#E6E6E6",
-                textcolor: "#6E6E6E",
-                title: 'security warnings',
-                data: [graphdata3],
-            });
-
-            $("#Linegraph3").SimpleChart({
-                toolwidth: "150",
-                toolheight: "25",
-                axiscolor: "#E6E6E6",
-                textcolor: "#6E6E6E",
-                title: 'rails practise',
-                data: [graphdata4],
-            });
-        });
-    </script>
   </head>
   <body>
+    <%= hidden_field_tag "previous_reports", @previous_reports.to_json, id: "previous_reports" %>
     <h2 class="tophead"> Q-meter Dashboard</h2>
     <hr/>
-     <table align="right" bgcolor="white" style="width:25%; font-size: 5pt;" border="2px">
-      <tr bgcolor="#A5FF88">
-        <td colspan="2"><h3 align="center" style="color: #195319; font-size: 8pt;">Security Warnings
+    <table class="security_warnings">
+      <tr>
+        <th colspan="2"><h3>Security Warnings</h3></th>
       </tr>
       <% unless @brakeman_warnings.blank? %>
         <% @brakeman_warnings.each do |warning| %>
@@ -123,7 +25,8 @@
     </table>
     <p></p>
 
-    <table class="headings" align="left" bgcolor="white" style="width:70%; font-size: 5pt;" border="2px">
+    <!-- <table class="headings" align="left" bgcolor="white" style="width:70%; font-size: 5pt;" border="2px"> -->
+    <table class="headings">
       <tr>
         <th><h3>Security Warnings</h3></th>
         <th ><h3>Rails Best Practise</h3></th>
@@ -131,8 +34,8 @@
         <th><h3>Stat</h3></th>
       </tr>
 
-      <tr bgcolor="white">
-        <th>
+      <tr>
+        <td>
           <a href="report.html" target="_blank">
             <div class="pie" style="<%= @brakeman_warnings_rgy %>">
               <div class="title"></div>
@@ -148,10 +51,12 @@
             </div>
           </a>
           <p></p>
-          <a href="report.html" target="_blank">Report</a>
-        </th>
+          <div class="table_report" align="center">
+            <a href="report.html" target="_blank">Report</a>
+          </span>
+        </td>
 
-        <th>
+        <td>
           <a href="/metric_fu/rails_best_practices.html" target="_blank">
             <div class="pie" style="<%= @rails_best_practices_rgy %>">
               <div class="title"></div>
@@ -167,10 +72,12 @@
             </div>
           </a>
           <p></p>
-          <a href="/metric_fu/rails_best_practices.html" target="_blank">Report</a>
-        </th>
+          <div class="table_report" align="center">
+            <a href="/metric_fu/rails_best_practices.html" target="_blank">Report</a>
+          </div>
+        </td>
 
-        <th>
+        <td>
           <a href="/metric_fu/flog.html" target="_blank">
             <div class="pie" style="<%= @flog_rgy %>">
               <div class="title"></div>
@@ -187,10 +94,12 @@
             </div>
           </a>
           <p></p>
-          <a href="/metric_fu/flog.html" target="_blank">Report</a>
-        </th>
+          <div class="table_report" align="center">
+            <a href="/metric_fu/flog.html" target="_blank">Report</a>
+          </div>
+        </td>
 
-        <th>
+        <td>
           <a href="/metric_fu/stats.html" target="_blank">
             <div class="pie" style="<%= @stats_rgy %>">
               <div class="title"></div>
@@ -207,32 +116,35 @@
             </div>
           </a>
           <p></p>
-          <a href="/metric_fu/stats.html" target="_blank">Report</a>
-        </th>
+          <div class="table_report" align="center">
+            <a href="/metric_fu/stats.html" target="_blank">Report</a>
+          </div>
+        </td>
       </tr>
     </table>
 
-    <table  align="center" border="1px" style="width: 100%; margin-top: 200px">
-      <tr bgcolor="#A5FF88">
-        <th align="center" style="color: #195319; font-size: 14pt;">HIstory</th>
+    <table class="history" align="center">
+      <tr>
+        <th align="center">History</th>
       </tr>
       <tr>
-        <% unless @previous_reports.blank? %>
+        <% if @previous_reports.blank? %>
+          <div class='git-commit'>No commits with Qmeter yet</div>
+        <% else %>
           <tr>
-            <th><div id="Linegraph2" style=" height: 200px"></div></th>
-            <tr><th> <div id="Linegraph3" style=" height: 200px"></div></th>
+            <td><div id="Linegraph2"></div></td>
+          </tr>
+            <tr><td> <div id="Linegraph3"></div></td>
           </tr>
           <tr>
-            <th><div id="Linegraph" style="height: 200px"></div></th>
+            <td><div id="Linegraph"></div></td>
           </tr>
-          <tr><th><div id="Linegraph1" style="height: 200px"></div></th></tr>
+          <tr><td><div id="Linegraph1"></div></td></tr>
           <!-- tr bgcolor="#A5FF88">
           <td colspan="2" align="center" style="font-size: 9pt;"><%#= "Generated on #{Time.now}" %></td>
-        </tr> -->
-        <% else %>
-          <div class='git-commit'>No commits with Qmeter yet</div>
+          </tr> -->
         <% end %>
-      </table>  <!--  -->
-<body>
+      </tr>
+    </table>
+  <body>
 </html>
-
