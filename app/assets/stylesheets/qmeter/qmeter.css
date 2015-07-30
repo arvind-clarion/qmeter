@@ -1,44 +1,47 @@
 #jquery-script-menu {
-position: fixed;
-height: 90px;
-width: 100%;
-top: 0;
-left: 0;
-border-top: 5px solid #316594;
-background: #fff;
--moz-box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.16);
--webkit-box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.16);
-box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.16);
-z-index: 999999;
-padding: 10px 0;
--webkit-box-sizing:content-box;
--moz-box-sizing:content-box;
-box-sizing:content-box;
+  position: fixed;
+  height: 90px;
+  width: 100%;
+  top: 0;
+  left: 0;
+  border-top: 5px solid #316594;
+  background: #fff;
+  -moz-box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.16);
+  -webkit-box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.16);
+  box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.16);
+  z-index: 999999;
+  padding: 10px 0;
+  -webkit-box-sizing:content-box;
+  -moz-box-sizing:content-box;
+  box-sizing:content-box;
 }
 
 .jquery-script-center {
-width: 960px;
-margin: 0 auto;
+  width: 960px;
+  margin: 0 auto;
 }
+
 .jquery-script-center ul {
-width: 212px;
-float:left;
-line-height:45px;
-margin:0;
-padding:0;
-list-style:none;
+  width: 212px;
+  float:left;
+  line-height:45px;
+  margin:0;
+  padding:0;
+  list-style:none;
 }
+
 .jquery-script-center a {
   text-decoration:none;
 }
+
 .jquery-script-ads {
-width: 728px;
-height:90px;
-float:right;
+  width: 728px;
+  height:90px;
+  float:right;
 }
 .jquery-script-clear {
-clear:both;
-height:0;
+  clear:both;
+  height:0;
 }
 
 /*qmeter git commit message*/
@@ -49,161 +52,252 @@ div.git-commit {
 /*-----------*/
 
 /* CSS style used for HTML reports */
-      body {
-        font-family: sans-serif;
-        color: #161616;
-        width: 80%;
-        margin: auto;
-      }
-      th {
-         /*background-color: #980905;*/
-         /*border-bottom: 5px solid #530200;*/
-         color: #003D00;
-         font-size: 8pt;
-         padding: 1px 8px 1px 8px;
-       }
+body {
+  font-family: sans-serif;
+  color: #161616;
+  width: 80%;
+  margin: auto;
+}
 
-       td {
-         border-bottom: 1px solid black;
-         font-family: monospace;
-         padding: 5px 8px 1px 8px;
-       }
+th {
+  /*background-color: #980905;*/
+  /*border-bottom: 5px solid #530200;*/
+  color: #003D00;
+  font-size: 8pt;
+  padding: 1px 8px 1px 8px;
+}
 
-       table {
-         /*background-color: #FCF4D4;*/
-         border-collapse: collapse;
-         /*color: black;*/
-       }
+td {
+  border-bottom: 1px solid black;
+  font-family: monospace;
+  padding: 5px 8px 1px 8px;
+}
 
-       tr.first {
-         border-top: 1px solid #7ecc54;
-         padding-top: 2px;
-       }
+table {
+  /*background-color: #FCF4D4;*/
+  border-collapse: collapse;
+  /*color: black;*/
+}
 
-       table{
-        width: 100%;
-        border: 1px;
-        border-color: black;
-       }
-       th, td{
-        font-size: 8pt;
-        width: 20%;
-       }
+tr.first {
+  border-top: 1px solid #7ecc54;
+  padding-top: 2px;
+}
 
-       .headings {
-        background-color:  #A5FF88;
-        padding-top: 10px;
-       }
+table{
+  width: 100%;
+  border: 1px;
+  border-color: black;
+}
 
-      .pie .title {
-        position: relative;
-        bottom: -40px;
-        text-align: top;
-        width: 50%;
-      }
+th, td{
+  font-size: 8pt;
+  width: 20%;
+}
 
-      .content {
-        width: 70px;
-        height: 70px;
-        border-radius: 50%;
-        background-color: white;
-        position: absolute;
-        top: 15px;
-        left: 15px;
-        line-height: 65px;
-        font-family: arial, sans-serif;
-        font-size: 25px;
-        text-align: center;
-        z-index: 2;
-      }
-      .content span {
-        opacity: 0;
-        animation: load-content 1s;
-        animation-fill-mode: forwards;
-        animation-delay: 0.6s;
-        -webkit-animation: load-content 3s;
-        -webkit-animation-fill-mode: forwards;
-        -webkit-animation-delay: 0.6s;
-      }
-      @keyframes load-content {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 5;
-        }
-      }
-      @-webkit-keyframes load-content {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
+table.security_warnings{
+  background-color: white;
+  width: 25%;
+  font-size: 5pt;
+  float: right;
+}
 
-      .pie {
-          width:100px;
-          height:100px;
-          left: 35px;
-          margin-top: 10px;
-          -moz-border-radius:100px;
-          -webkit-border-radius:100px;
-          border-radius:100px;
-          position:relative;
-      }
-       a {
-        text-decoration: none;
-        }
+table.security_warnings tr:first-child{
+  background-color: #A5FF88;
+  border: 1px;
+  border-style: solid;
+}
 
-        h2.tophead {
-   margin: 0;
-   color: green;
+table.security_warnings tr th h3{
+  color: #195319;
+  font-size: 8pt;
+  font-weight: bolder;
+  font-family: monospace;
+  padding: 5px 8px 1px;
+}
 
-    }
-    hr{
-      margin-top: 6px;
-      margin-bottom: 20px;
-    }
- .SimpleChart {
-            position: relative;
-        }
+table.security_warnings td{
+  border: 1px;
+  border-style: solid;
+  border-right-style: solid;
+}
 
-            .SimpleChart #tip {
-                background-color: #f0f0f0;
-                border: 1px solid #d0d0d0;
-                position: absolute;
-                left: -200px;
-                top: 30px;
-            }
+.headings {
+  background-color: #A5FF88;
+  padding-top: 10px;
+  float: left;
+  width: 70%;
+  font-size: 5pt;
+}
 
-        .down-triangle {
-            width: 0;
-            height: 0;
-            border-top: 10px solid #d0d0d0;
-            border-left: 6px solid transparent;
-            border-right: 6px solid transparent;
-            position: absolute;
-            left: -200px;
-        }
+.headings th{
+  border: 1px;
+  border-top-style: solid;
+  border-right-style: solid;
+  border-bottom-style: solid;
+  border-left-style: solid;
+}
+
+.headings tr:last-child{
+  background-color: white;
+}
+
+.headings td{
+  border: 1px;
+  border-top-style: solid;
+  border-right-style: solid;
+  border-bottom-style: solid;
+  border-left-style: solid;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+.headings td.table_report {
+  width="100%";
+}
+
+.pie .title {
+  position: relative;
+  bottom: -40px;
+  text-align: top;
+  width: 50%;
+}
+
+.content {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: white;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  line-height: 65px;
+  font-family: arial, sans-serif;
+  font-size: 25px;
+  text-align: center;
+  z-index: 2;
+}
+
+.content span {
+  opacity: 0;
+  animation: load-content 1s;
+  animation-fill-mode: forwards;
+  animation-delay: 0.6s;
+  -webkit-animation: load-content 3s;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-delay: 0.6s;
+}
+
+@keyframes load-content {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 5;
+  }
+}
+
+@-webkit-keyframes load-content {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.pie {
+  width:100px;
+  height:100px;
+  left: 35px;
+  margin-top: 10px;
+  -moz-border-radius:100px;
+  -webkit-border-radius:100px;
+  border-radius:100px;
+  position:relative;
+}
+
+a {
+  text-decoration: none;
+}
+
+.history{
+  width: 100%;
+  border: 1px;
+  margin-top: 200px;
+  border-top-style: solid;
+  border-right-style: solid;
+  border-bottom-style: solid;
+  border-left-style: solid;
+}
+
+.history tr:first-child{
+  background-color: #A5FF88;
+}
+
+.history tr{
+  border: 1px;
+  border-bottom-style: solid;
+}
+
+.history tr th{
+  color: #195319;
+  font-size: 14pt;
+}
+
+.history tr td{
+  height: 200px;
+}
+
+h2.tophead {
+  margin: 0;
+  color: green;
+}
+
+hr{
+  margin-top: 6px;
+  margin-bottom: 20px;
+}
+
+.SimpleChart {
+  position: relative;
+}
+
+.SimpleChart #tip {
+  background-color: #f0f0f0;
+  border: 1px solid #d0d0d0;
+  position: absolute;
+  left: -200px;
+  top: 30px;
+}
+
+.down-triangle {
+  width: 0;
+  height: 0;
+  border-top: 10px solid #d0d0d0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  position: absolute;
+  left: -200px;
+}
 
 
-        .SimpleChart #highlighter {
-            position: absolute;
-            left: -200px;
-        }
+.SimpleChart #highlighter {
+  position: absolute;
+  left: -200px;
+}
 
-        .-simple-chart-holder {
-            float: left;
-            position: relative;
-            width: 100%;
-            background-color: #fff;
-            border: 1px solid #cecece;
-            /*padding: 6px;*/
-        }
+.-simple-chart-holder {
+  float: left;
+  position: relative;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #cecece;
+  /*padding: 6px;*/
+}
 
-        /******Starts::Horizontal Alignment of Legends******/
-        .simple-chart-Header {
-            position: absolute;
-            font-size: 16px;
-        }
+/******Starts::Horizontal Alignment of Legends******/
+.simple-chart-Header {
+  position: absolute;
+  font-size: 16px;
+}
