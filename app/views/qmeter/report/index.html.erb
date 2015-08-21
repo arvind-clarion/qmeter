@@ -130,7 +130,7 @@
       <tr>
         <td></td>
         <td>
-          <a href="/metric_fu/stats.html" target="_blank">
+          <%= link_to qmeter_js_cs_path, target: "_blank" do %>
             <div class="pie" style="<%= @stats_rgy %>">
               <div class="title"></div>
               <div class="outer-right mask" id= "10deg">
@@ -144,15 +144,14 @@
                 <span><%= @js_error_count.to_i %></span>
               </div>
             </div>
-          </a>
+          <% end %>
           <p></p>
           <div class="table_report" align="center">
-            <!-- <a href="/metric_fu/stats.html" target="_blank">Report</a> -->
-            <%= link_to "Repoort", qmeter_js_cs_path, target: "_blank" %>
+            <%= link_to "Report", qmeter_js_cs_path, target: "_blank" %>
           </div>
         </td>
         <td>
-          <a href="/metric_fu/stats.html" target="_blank">
+          <%= link_to qmeter_js_cs_path, target: "_blank" do %>
             <div class="pie" style="<%= @stats_rgy %>">
               <div class="title"></div>
               <div class="outer-right mask" id= "10deg">
@@ -166,11 +165,10 @@
                 <span><%= @cs_error_count.to_i %></span>
               </div>
             </div>
-          </a>
+          <% end %>
           <p></p>
           <div class="table_report" align="center">
-            <!-- <a href="/metric_fu/stats.html" target="_blank">Report</a> -->
-            <%= link_to "Repoort", qmeter_js_cs_path, target: "_blank" %>
+            <%= link_to "Report", qmeter_js_cs_path, target: "_blank" %>
           </div>
         </td>
         <td></td>

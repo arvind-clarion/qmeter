@@ -8,69 +8,73 @@
   <body>
     <h2>JavaScript Errors</h2>
       <div float="right"><%= "Total errors : " + @js_error_count.to_s %></div>
-      <% @js_errors.each_key do |error| %>
-        File Name: <%= error %>
-        <div class="rTable">
-          <div class="rTableRow">
-            <div class="rTableHead">
-              Line Number
-            </div>
-            <div class="rTableHead">
-              Column Number
-            </div>
-            <div class="rTableHead">
-              Message
-            </div>
-          </div>
-          <% @js_errors[error].each_with_index do |error_details, index| %>
+      <% unless @js_errors.nil? %>
+        <% @js_errors.each_key do |error| %>
+          File Name: <%= error %>
+          <div class="rTable">
             <div class="rTableRow">
-              <div class="rTableCell">
-                <%= error_details[:line_number] %>
+              <div class="rTableHead">
+                Line Number
               </div>
-              <div class="rTableCell">
-                <%= error_details[:column_number] %>
+              <div class="rTableHead">
+                Column Number
               </div>
-              <div class="rTableCell">
-                <%= error_details[:message] %>
+              <div class="rTableHead">
+                Message
               </div>
             </div>
-          <% end %>
-        </div>
-        <br />
+            <% @js_errors[error].each_with_index do |error_details, index| %>
+              <div class="rTableRow">
+                <div class="rTableCell">
+                  <%= error_details[:line_number] %>
+                </div>
+                <div class="rTableCell">
+                  <%= error_details[:column_number] %>
+                </div>
+                <div class="rTableCell">
+                  <%= error_details[:message] %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+          <br />
+        <% end %>
       <% end %>
     <br />
 
     <h2>CoffeeScript Errors</h2>
       <div float="right"><%= "Total errors : " + @cs_error_count.to_s %></div>
-      <% @cs_errors.each_key do |error| %>
-        File Name: <%= error %>
-        <div class="rTable">
-          <div class="rTableRow">
-            <div class="rTableHead">
-              Line Number
-            </div>
-            <div class="rTableHead">
-              Column Number
-            </div>
-            <div class="rTableHead">
-              Message
-            </div>
-          </div>
-          <% @cs_errors[error].each_with_index do |error_details, index| %>
+      <% unless @cs_errors.nil? %>
+        <% @cs_errors.each_key do |error| %>
+          File Name: <%= error %>
+          <div class="rTable">
             <div class="rTableRow">
-              <div class="rTableCell">
-                <%= error_details[:line_number] %>
+              <div class="rTableHead">
+                Line Number
               </div>
-              <div class="rTableCell">
-                <%= error_details[:column_number] %>
+              <div class="rTableHead">
+                Column Number
               </div>
-              <div class="rTableCell">
-                <%= error_details[:message] %>
+              <div class="rTableHead">
+                Message
               </div>
             </div>
-          <% end %>
-        </div>
-        <br />
+            <% @cs_errors[error].each_with_index do |error_details, index| %>
+              <div class="rTableRow">
+                <div class="rTableCell">
+                  <%= error_details[:line_number] %>
+                </div>
+                <div class="rTableCell">
+                  <%= error_details[:column_number] %>
+                </div>
+                <div class="rTableCell">
+                  <%= error_details[:message] %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+          <br />
+        <% end %>
       <% end %>
     <br />
   <body>
