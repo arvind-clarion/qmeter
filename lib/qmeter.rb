@@ -116,4 +116,52 @@ module Qmeter
       'background-color:#006633;'
     end
   end
+
+  def javascript_coffeescript_reports
+    system('rake jshint > config/js_cs_config/js_error_list.txt')
+    file = File.new("config/js_cs_config/js_error_list.txt", "r") if File.exists?('config/js_cs_config/js_error_list.txt')
+
+    if file.present? && file.count > 0
+      file.rewind
+      line_count = file.count
+      file.rewind
+      @js_errors = {}
+      @js_error_count = 0
+      file.each_with_index do |line, index|
+        error_details = /(?<file_name>\w+).js: line (?<line_number>\d+), col (?<column_number>\d+),/.match(line)
+        unless error_details.nil?
+          file_name = error_details[:file_name] << ".js"
+          line_number = error_details[:line_number]
+          column_number = error_details[:column_number]
+          message = line.split(',').last.strip.gsub('.',"")
+          @js_errors["#{file_name}"] = [] unless @js_errors["#{file_name}"].present?
+          @js_errors["#{file_name}"] << {line_number: line_number, column_number: column_number, message: message}
+        end
+        @js_error_count = /(?<error_count>\d+) errors/.match(line)[:error_count] if (line_count - 1) == index
+      end
+    else
+    end
+
+    coffee_listing = Coffeelint.lint_dir('app/assets/javascripts', :config_file => 'config/js_cs_config/coffeelint.json')
+
+    @cs_error_count = 0
+    coffee_listing.each_with_index do |files, index|
+      if files.present?
+        file_name = files.first.split("/").last
+        @cs_errors = {}
+        @cs_errors["#{file_name}"] = []
+        files.each_with_index do |line, index|
+          next if index == 0
+          line.each_with_index do |error, index|
+            column_number = (error["rule"] == "coffeescript_error") ? error["message"].split(":").third : ""
+            line_number = error["lineNumber"]
+            message = error["message"].split("error: ").last.split("\n").first
+            @cs_errors["#{file_name}"] << {:line_number => line_number, :column_number => column_number, :message => message}
+            @cs_error_count += 1
+          end
+        end
+      end
+    end
+  end
+
 end
