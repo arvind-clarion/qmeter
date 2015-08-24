@@ -137,7 +137,7 @@ module Qmeter
           @js_errors["#{file_name}"] = [] unless @js_errors["#{file_name}"].present?
           @js_errors["#{file_name}"] << {line_number: line_number, column_number: column_number, message: message}
         end
-        @js_error_count = /(?<error_count>\d+) errors/.match(line)[:error_count] if (line_count - 1) == index
+        @js_error_count = /(?<error_count>\d+) errors/.match(line)[:error_count].to_i if (line_count - 1) == index
       end
     else
     end
