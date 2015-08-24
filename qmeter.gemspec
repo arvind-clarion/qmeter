@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "qmeter"
   spec.version       = Qmeter::VERSION
   spec.authors       = ["Rohit Bhore"]
-  spec.email         = ["rohitpbhore@gmail.com"]
+  spec.email         = ["rohit.bhore@clariontechnologies.co.in"]
 
   spec.summary       = %q{Code quality report through metric_fu and brakeman gem}
   spec.description   = %q{Code quality report through metric_fu and brakeman gem}
