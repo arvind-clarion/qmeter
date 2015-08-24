@@ -139,7 +139,6 @@ module Qmeter
         end
         @js_error_count = /(?<error_count>\d+) errors/.match(line)[:error_count].to_i if (line_count - 1) == index
       end
-    else
     end
 
     coffee_listing = Coffeelint.lint_dir('app/assets/javascripts', :config_file => 'config/js_cs_config/coffeelint.json')
