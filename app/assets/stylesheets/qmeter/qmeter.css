@@ -336,6 +336,8 @@ hr{
 }
 
 .rTableHead, .rTableFoot{
-  background-color: #DDD;
+  /*background-color: #DDD;*/
   font-weight: bold;
+  background-color: #a5ff88;
+  font-size: 8pt;
 }
