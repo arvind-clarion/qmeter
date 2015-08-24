@@ -56,6 +56,8 @@ namespace :qmeter do
       self.generate_final_report
       puts "======= Saving Current Analysis Details ======="
       self.save_report
+      # Initialize JavaScript and CoffeeScript functionality
+      initialize_javascript_coffeescript_report unless File.exist?("#{Rails.root}/config/js_cs_config/js_error_list.txt")
 
       rows = []
       rows << ['Security Warning', @warnings_count]
@@ -64,6 +66,7 @@ namespace :qmeter do
       rows << ['Rails Best Practices', @rails_best_practices_total]
       table = Terminal::Table.new :title => "Qmeter Analysis", :headings => ['Type', 'Number'], :rows => rows, :style => {:width => 80}
       puts table
+
       puts "======= Please visit localhost:3000/qmeter for detailed report ======="
     else
       puts "======= Please Initialize git first =======".bold.green.bg_red
@@ -77,6 +80,7 @@ namespace :qmeter do
     add_to_gitignore("report.html")
     add_to_gitignore("public/metric_fu")
     add_to_gitignore("config/jshint.yml")
+    add_to_gitignore("config/js_cs_config")
   end
 
   def add_to_gitignore(file_folder)
@@ -87,4 +91,16 @@ namespace :qmeter do
       gitignore_file.close_write
     end
   end
+
+  def initialize_javascript_coffeescript_report
+    puts "======= Initializing for JavsScript CoffeeScript reports =======".reverse_color
+    open("#{Rails.root}/Gemfile", 'a') { |f| f.puts "gem 'jshint'" } unless (File.read('Gemfile').include?("gem 'jshint'") || File.read('Gemfile').include?('gem "jshint"'))
+    open("#{Rails.root}/Gemfile", 'a') { |f| f.puts "gem 'coffeelint'" } unless (File.read('Gemfile').include?("gem 'coffeelint'") || File.read('Gemfile').include?('gem "coffeelint"'))
+    system('bundle')
+    system('mkdir config/js_cs_config && rake jshint > config/js_cs_config/js_error_list.txt')
+    File.open("config/js_cs_config/coffeelint.json", 'w') do |f|
+      f.write('{ "max_line_length": { "value": 120 }, "no_tabs": { "level": "ignore" } }')
+    end
+  end
+
 end

@@ -121,6 +121,58 @@
           </div>
         </td>
       </tr>
+      <tr>
+        <th></th>
+        <th><h3>JavaScript Warnings</h3></th>
+        <th><h3>CoffeeScript Warnings</h3></th>
+        <th></th>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <%= link_to qmeter_js_cs_path, target: "_blank" do %>
+            <div class="pie" style="<%= @stats_rgy %>">
+              <div class="title"></div>
+              <div class="outer-right mask" id= "10deg">
+                <div class="inner-right"></div>
+              </div>
+
+              <div class="outer-left mask">
+                <div class="inner-left"></div>
+              </div>
+              <div class="content">
+                <span><%= @js_error_count.to_i %></span>
+              </div>
+            </div>
+          <% end %>
+          <p></p>
+          <div class="table_report" align="center">
+            <%= link_to "Report", qmeter_js_cs_path, target: "_blank" %>
+          </div>
+        </td>
+        <td>
+          <%= link_to qmeter_js_cs_path, target: "_blank" do %>
+            <div class="pie" style="<%= @stats_rgy %>">
+              <div class="title"></div>
+              <div class="outer-right mask" id= "10deg">
+                <div class="inner-right"></div>
+              </div>
+
+              <div class="outer-left mask">
+                <div class="inner-left"></div>
+              </div>
+              <div class="content">
+                <span><%= @cs_error_count.to_i %></span>
+              </div>
+            </div>
+          <% end %>
+          <p></p>
+          <div class="table_report" align="center">
+            <%= link_to "Report", qmeter_js_cs_path, target: "_blank" %>
+          </div>
+        </td>
+        <td></td>
+      </tr>
     </table>
 
     <table class="history" align="center">
