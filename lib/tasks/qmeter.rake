@@ -80,6 +80,7 @@ namespace :qmeter do
     add_to_gitignore("report.html")
     add_to_gitignore("public/metric_fu")
     add_to_gitignore("config/jshint.yml")
+    add_to_gitignore("config/js_cs_config")
   end
 
   def add_to_gitignore(file_folder)
