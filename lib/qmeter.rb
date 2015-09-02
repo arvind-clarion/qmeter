@@ -121,12 +121,12 @@ module Qmeter
     system('rake jshint > config/js_cs_config/js_error_list.txt')
     file = File.new("config/js_cs_config/js_error_list.txt", "r") if File.exists?('config/js_cs_config/js_error_list.txt')
 
+    @js_error_count = 0
     if file.present? && file.count > 0
       file.rewind
       line_count = file.count
       file.rewind
       @js_errors = {}
-      @js_error_count = 0
       file.each_with_index do |line, index|
         error_details = /(?<file_name>\w+).js: line (?<line_number>\d+), col (?<column_number>\d+),/.match(line)
         unless error_details.nil?
