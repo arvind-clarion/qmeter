@@ -4,10 +4,6 @@ require 'terminal-table'
 
 namespace :qmeter do
   desc "Run brakeman and metric_fu to generate report of code"
-  ######@sourabh: copy the jshint file from gem cogif to application config #######
-   source = File.join(Gem.loaded_specs["qmeter"].full_gem_path, "config", "jshint.yml")
-    target = File.join(Rails.root, "config", "jshint.yml")
-    FileUtils.cp_r source, target
 
   ### @arvind: This will run command to generate brakeman and matric fu report ###
   task :generate_report do
@@ -16,17 +12,13 @@ namespace :qmeter do
 
     puts "*** run metric_fu ***"
     system "metric_fu --out #{Rails.root}/public/metric_fu "
-
-    puts "-----JAVASCRIPT Erorrs----------"
-    system "jshint"
-
   end
 
   task :add_command_in_post_commit do
     ### @arvind:  Asked user to add rake command inside git post commit file , Task will run in each eommit
     STDOUT.puts "Write Y to add rake qmeter:run command to 'post commit', it will run when you commit the code".reverse_color
     input = STDIN.gets.strip
-    if input == 'y'
+    if input == 'y' || input == 'Y'
       File.open('.git/hooks/post-commit', 'a') do |f|
         f.puts "rake qmeter:run"
       end
@@ -38,8 +30,8 @@ namespace :qmeter do
 
   ### *** ###
   task :run do
-    ### @arvind:  this will check git post commit has rake command or not
     if File.directory?('.git') && File.exists?('.git/config')
+      ### @arvind:  this will check git post commit has rake command or not
       if File.file?('.git/hooks/post-commit')
         file =  File.read(".git/hooks/post-commit").include?('rake qmeter:run')
         if !file =  File.read(".git/hooks/post-commit").include?('rake qmeter:run')
@@ -79,7 +71,6 @@ namespace :qmeter do
     add_to_gitignore("report.json")
     add_to_gitignore("report.html")
     add_to_gitignore("public/metric_fu")
-    add_to_gitignore("config/jshint.yml")
     add_to_gitignore("config/js_cs_config")
   end
 
@@ -97,7 +88,7 @@ namespace :qmeter do
     open("#{Rails.root}/Gemfile", 'a') { |f| f.puts "gem 'jshint'" } unless (File.read('Gemfile').include?("gem 'jshint'") || File.read('Gemfile').include?('gem "jshint"'))
     open("#{Rails.root}/Gemfile", 'a') { |f| f.puts "gem 'coffeelint'" } unless (File.read('Gemfile').include?("gem 'coffeelint'") || File.read('Gemfile').include?('gem "coffeelint"'))
     system('bundle')
-    system('mkdir config/js_cs_config && rake jshint > config/js_cs_config/js_error_list.txt')
+    system('mkdir config/js_cs_config') unless File.directory?("#{Rails.root}/config/js_cs_config")
     File.open("config/js_cs_config/coffeelint.json", 'w') do |f|
       f.write('{ "max_line_length": { "value": 120 }, "no_tabs": { "level": "ignore" } }')
     end

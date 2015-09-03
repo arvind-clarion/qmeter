@@ -37,7 +37,7 @@ module Qmeter
         extend Qmeter
         self.javascript_coffeescript_reports
       else
-        render :text=> "Run 'rake qmeter:run first'"
+        render :text=> "Run 'rake qmeter:run' first"
       end
     end
 
